@@ -23,7 +23,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Login do Gmail" />
 
-    <Button
+    <com.br.amber.logins.CustomButtonLogin
         android:id="@+id/buttonEditLogin"
         style="@style/Widget.AppCompat.Button"
         android:layout_width="0dp"
@@ -32,7 +32,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/plataformName" />
 
-    <Button
+    <com.br.amber.logins.CustomButtonLogin
         android:id="@+id/buttonDeleteLogin"
         style="@style/Widget.AppCompat.Button"
         android:layout_width="0dp"

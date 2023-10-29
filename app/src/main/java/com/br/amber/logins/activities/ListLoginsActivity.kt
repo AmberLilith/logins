@@ -2,14 +2,12 @@ package com.br.amber.logins.activities
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.br.amber.logins.R
 import com.br.amber.logins.models.Login
 import com.br.amber.logins.recycleviews.ListLoginsAdapter
-import com.br.amber.logins.utils.GeneralUse
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -33,23 +31,25 @@ class ListLoginsActivity : AppCompatActivity() {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if (dataSnapshot.exists()) {
                     val loginList = mutableListOf<Login>()
-
+                    loginsKeys.clear()
                     for (childSnapshot in dataSnapshot.children) {
                         val childData = childSnapshot.getValue(Login::class.java)
-                        //TODO parei aqui na hora de pegar o nó do login e passar par o Adapter
                         loginsKeys.add(childSnapshot.key.toString())
                         if (childData != null) {
                             loginList.add(childData)
                         }
                     }
 
-                    for (login in loginList) {
-                        plataformsNames.add(login.plataformName)
-                    }
+                    val newPlataformsNames  = loginList.map { it.plataformName }
+                    val newLoginsKeys = loginsKeys
 
-                    recyclerView.adapter = ListLoginsAdapter(context, plataformsNames, loginsKeys)
+                    if (plataformsNames.isEmpty()) {
+                        recyclerView.adapter = ListLoginsAdapter(context, newPlataformsNames.toMutableList(), newLoginsKeys.toMutableList())
+                    } else {
+                        (recyclerView.adapter as ListLoginsAdapter).updateData(newPlataformsNames, newLoginsKeys)
+                    }
                 } else {
-                    plataformsNames.add("Não há login cadastrado ainda!")
+                    (recyclerView.adapter as ListLoginsAdapter).clearData()
                 }
             }
 
