@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "970496602059",
+    "project_id": "logins-61353",
+    "storage_bucket": "logins-61353.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:970496602059:android:6138f5c5e64be385dc104e",
+        "android_client_info": {
+          "package_name": "com.br.amber.logins"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_uwQp_pAIWjwZV6eY4l_ATYjz9_c8urY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
