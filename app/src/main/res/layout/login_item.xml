@@ -28,7 +28,7 @@
         style="@style/Widget.AppCompat.Button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Editar"
+        android:text="@string/buttonEditLogin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/plataformName" />
 
@@ -37,7 +37,7 @@
         style="@style/Widget.AppCompat.Button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Excluir"
+        android:text="@string/buttonDeleteLogin"
         app:layout_constraintEnd_toStartOf="@+id/buttonEditLogin"
         app:layout_constraintTop_toBottomOf="@+id/plataformName" />
 

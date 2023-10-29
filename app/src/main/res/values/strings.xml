@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">logins</string>
+    <string name="buttonEditLogin">Editar</string>
+    <string name="buttonDeleteLogin">Excluir</string>
 </resources>
