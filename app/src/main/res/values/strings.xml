@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">logins</string>
+    <string name="buttonAuthText">Autenticar</string>
+    <string name="textViewRegisterForgottenPassword">Esqueci minha senha</string>
+    <string name="buttonRegisterText">Registrar</string>
+    <string name="textViewRegisterText">Registrar-se</string>
+    <string name="editTextRegisterEmailHint">Digite email</string>
+    <string name="editTextRegisterPasswordHint">Digite a senha</string>
+    <string name="textViewAuthTitleText">Autenticação</string>
+    <string name="editTxtRegisterEmailText">Digite um email válido</string>
+    <string name="textviewRegisterTitle">Registro de Email e Senha</string>
+    <string name="textViewRegisterForgottenPasswordText">Esqueci minha senha</string>
 </resources>
