@@ -2,53 +2,70 @@ package com.br.amber.logins.activities
 
 import android.content.ContentValues.TAG
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.br.amber.logins.R
+import com.br.amber.logins.models.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
 class RegisterEmailAndPasswordActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var editTextEmail: EditText
-    private lateinit var  editTextPassword: EditText
+    private lateinit var editTextUserName: EditText
+    private lateinit var editTextPassword: EditText
+    private lateinit var editTextRepeatPassword: EditText
     private lateinit var buttonRegister: Button
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register_email_and_password)
 
-        editTextEmail = findViewById(R.id.editTextRegisterEmail)
-         editTextPassword = findViewById(R.id.editTextRegisterPassword)
-        buttonRegister =  findViewById(R.id.buttonRegister)
+        editTextEmail = findViewById(R.id.registerEmailPasswordEditTextEmail)
+        editTextPassword = findViewById(R.id.createOrEditLoginEditTextPassword)
+        editTextRepeatPassword = findViewById(R.id.createOrEditLoginEditTextRepeatPassword)
+        editTextUserName = findViewById(R.id.registerEmailPasswordTextTextUserName)
+        buttonRegister = findViewById(R.id.registerEmailPasswordButtonRegister)
         auth = Firebase.auth
 
-        buttonRegister.setOnClickListener{
-            auth.createUserWithEmailAndPassword(editTextEmail.text.toString(), editTextPassword.text.toString())
-                .addOnCompleteListener(this) { task ->
-                    if (task.isSuccessful) {
-                        // Sign in success, update UI with the signed-in user's information
-                        Log.d(TAG, "createUserWithEmail:success")
-                        val user = auth.currentUser
-                        updateUI(user)
-                    } else {
-                        // If sign in fails, display a message to the user.
-                        Log.w(TAG, "createUserWithEmail:failure", task.exception)
-                        Toast.makeText(
-                            baseContext,
-                            "Authentication failed.",
-                            Toast.LENGTH_SHORT,
-                        ).show()
-                        updateUI(null)
+        buttonRegister.setOnClickListener {
+            if (validateIfFieldsAreValids()) {
+                auth.createUserWithEmailAndPassword(
+                    editTextEmail.text.toString(),
+                    editTextPassword.text.toString()
+                )
+                    .addOnCompleteListener(this) { task ->
+                        if (task.isSuccessful) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "createUserWithEmail:success")
+                            val user = auth.currentUser
+                            val userId = user!!.uid
+                            val userName = editTextUserName.text.toString()
+                            val database = Firebase.database
+                            val data = mutableMapOf<String, Any>()
+                            data["datas"] = User(userName, "")
+                            data["logins"] = ""
+                            database.reference.child(userId).setValue(data)
+                            updateUI(user)
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "createUserWithEmail:failure", task.exception)
+                            Toast.makeText(
+                                baseContext,
+                                "Authentication failed.",
+                                Toast.LENGTH_SHORT,
+                            ).show()
+                            updateUI(null)
+                        }
                     }
-                }
+            }
         }
     }
 
@@ -103,5 +120,30 @@ class RegisterEmailAndPasswordActivity : AppCompatActivity() {
                     // task.exception can provide more details about the error
                 }
             }
+    }
+
+    fun validateIfFieldsAreValids(): Boolean {
+        if (editTextEmail.text.trim().isEmpty()) {
+            editTextEmail.error = "Email vazio!"
+            return false
+        } else if (!isEmailValid(editTextEmail.text.trim().toString())) {
+            editTextEmail.error = "Não é um email válido!"
+            return false
+        } else if (editTextPassword.text.trim()
+                .isEmpty() || editTextPassword.text.trim().length < 6
+        ) {
+            editTextPassword.error = "password inválido!"
+            return false
+        } else if (editTextPassword.text.trim() != editTextRepeatPassword.text.trim()) {
+            editTextPassword.error = "As senhas não conferem!"
+            editTextRepeatPassword.error = "As senhas não conferem!"
+            return false
+        }
+        return true
+    }
+
+    fun isEmailValid(email: String): Boolean {
+        val emailRegex = "^[A-Za-z](.*)([@]{1})(.{1,})(\\.)(.{1,})"
+        return email.matches(emailRegex.toRegex())
     }
 }

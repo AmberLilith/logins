@@ -1,13 +1,29 @@
 <resources>
     <string name="app_name">logins</string>
-    <string name="buttonAuthText">Autenticar</string>
+    <string name="authenticationButtonAuthenticateText">Autenticar</string>
     <string name="textViewRegisterForgottenPassword">Esqueci minha senha</string>
     <string name="buttonRegisterText">Registrar</string>
-    <string name="textViewRegisterText">Registrar-se</string>
-    <string name="editTextRegisterEmailHint">Digite email</string>
-    <string name="editTextRegisterPasswordHint">Digite a senha</string>
-    <string name="textViewAuthTitleText">Autenticação</string>
-    <string name="editTxtRegisterEmailText">Digite um email válido</string>
+    <string name="authenticationTextViewRegisterText">Registrar-se</string>
+    <string name="authenticationEditTextEmailHint">Digite email</string>
+    <string name="authenticationEditTextPasswordHint">Digite a senha</string>
+    <string name="authenticationTextViewTitleText">Autenticação</string>
+    <string name="editTxtRegisterEmailHint">Digite um email válido</string>
     <string name="textviewRegisterTitle">Registro de Email e Senha</string>
-    <string name="textViewRegisterForgottenPasswordText">Esqueci minha senha</string>
+    <string name="authenticationTextViewRegisterForgottenPasswordText">Esqueci minha senha</string>
+    <string name="authenticationTextViewEmailText">Email:</string>
+    <string name="authenticationTextViewPasswordText">Senha:</string>
+    <string name="textViewRegisterPasswordText">Senha:</string>
+    <string name="createOrEditLoginTextViewRepeatPasswordText">Repita a senha:</string>
+    <string name="textViewRegisterEmailText">Email:</string>
+    <string name="createOrEditLoginEditTextRepeatPasswordHnt">Digite a senha</string>
+    <string name="createOrEditLoginTextViewPlatformNameText">Nome da plataforma/site</string>
+    <string name="createOrEditLoginEditTextPlatformNameHint">Nome da plataforma/site</string>
+    <string name="textViewUserText">Nome usuario:</string>
+    <string name="createOrEditLoginTextViewPassworText">Digite a senha:</string>
+    <string name="createOrEditLoginEditTextPasswordHint">Digite a senha:</string>
+    <string name="createOrEditLoginEditTextUserHint">Nome usuário</string>
+    <string name="createOrEditLoginButtonCancelText">Cancelar</string>
+    <string name="createOrEditLoginButtonSaveText">Salvar</string>
+    <string name="registerEmailPasswordTextTextUserNameHint">Digite seu nome</string>
+    <string name="registerEmailPasswordTextViewUserNameText">Nome:</string>
 </resources>

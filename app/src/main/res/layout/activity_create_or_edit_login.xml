@@ -4,11 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="16dp"
     tools:context=".activities.CreateOrEditLoginActivity">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/activityCreateOrEditLoginToolbar"
-        android:layout_width="406dp"
+        android:id="@+id/createOrEditLoginToolbar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#5E5C5C"
         android:minHeight="?attr/actionBarSize"
@@ -19,87 +20,154 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/platformName"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:ems="10"
-        android:hint="Nome da plataforma"
-        android:inputType="text"
+        android:layout_marginTop="16dp"
+        android:background="@color/gray"
+        android:orientation="vertical"
+        android:padding="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/activityCreateOrEditLoginToolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/createOrEditLoginToolbar">
 
-    <EditText
-        android:id="@+id/user"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:ems="10"
-        android:hint="Nome usuário"
-        android:inputType="text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/platformName" />
+        <TextView
+            android:id="@+id/createOrEditLoginTextViewPlatformName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/createOrEditLoginTextViewPlatformNameText" />
 
-    <EditText
-        android:id="@+id/password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:layout_marginTop="76dp"
-        android:ems="10"
-        android:hint="Senha"
-        android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/user" />
+        <EditText
+            android:id="@+id/createOrEditLoginEditTextPlatformName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:ems="10"
+            android:hint="@string/createOrEditLoginEditTextPlatformNameHint"
+            android:inputType="text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/createOrEditLoginToolbar" />
+
+        <TextView
+            android:id="@+id/createOrEditLoginTextViewUser"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/textViewUserText" />
+
+        <EditText
+            android:id="@+id/createOrEditLoginEditTextUser"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:ems="10"
+            android:hint="@string/createOrEditLoginEditTextUserHint"
+            android:inputType="text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.502"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/createOrEditLoginEditTextPlatformName" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/createOrEditLoginTextViewPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/createOrEditLoginTextViewPassworText" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/createOrEditLoginEditTextPassword"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:layout_marginTop="76dp"
+                    android:ems="10"
+                    android:hint="@string/createOrEditLoginEditTextPasswordHint"
+                    android:inputType="textPassword"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/createOrEditLoginEditTextUser" />
+
+                <Button
+                    android:id="@+id/createOrEditLoginButtonGeneratePassword"
+                    style="@style/Widget.AppCompat.Button"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/createOrEditLoginTextViewRepeatPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/createOrEditLoginTextViewRepeatPasswordText" />
+
+        <EditText
+            android:id="@+id/createOrEditLoginEditTextRepeatPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints="password"
+            android:ems="10"
+            android:hint="@string/createOrEditLoginEditTextRepeatPasswordHnt"
+            android:inputType="textPassword"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/registerEmailPasswordEditTextEmail" />
+
+        <LinearLayout
+            android:id="@+id/createOrEditLoginLinearLayoutButtonsCancelSave"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/createOrEditLoginButtonCancel"
+                style="@style/Widget.AppCompat.Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/createOrEditLoginButtonCancelText"
+                tools:layout_editor_absoluteX="70dp"
+                tools:layout_editor_absoluteY="322dp" />
+
+            <Button
+                android:id="@+id/createOrEditLoginButtonSave"
+                style="@style/Widget.AppCompat.Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/createOrEditLoginButtonSaveText"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="200dp"
+                tools:layout_editor_absoluteY="322dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
 
     <TextView
-        android:id="@+id/activityCreateOrEditLoginTitle"
+        android:id="@+id/createOrEditLoginTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#FDFCFC"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@+id/activityCreateOrEditLoginToolbar"
-        app:layout_constraintEnd_toEndOf="@+id/activityCreateOrEditLoginToolbar"
-        app:layout_constraintStart_toStartOf="@+id/activityCreateOrEditLoginToolbar"
-        app:layout_constraintTop_toTopOf="@+id/activityCreateOrEditLoginToolbar" />
-
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/activityCreateOrEditLoginToolbar"
-        app:layout_constraintVertical_bias="0.412"
-        tools:layout_editor_absoluteX="0dp">
-
-        <Button
-            android:id="@+id/activityCreateOrEditLoginButtonCancel"
-            style="@style/Widget.AppCompat.Button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Cancelar"
-            tools:layout_editor_absoluteX="70dp"
-            tools:layout_editor_absoluteY="322dp" />
-
-        <Button
-            android:id="@+id/buttonSave"
-            style="@style/Widget.AppCompat.Button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Salvar"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="200dp"
-            tools:layout_editor_absoluteY="322dp" />
-
-    </LinearLayout>
-
+        app:layout_constraintBottom_toBottomOf="@+id/createOrEditLoginToolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/createOrEditLoginToolbar"
+        tools:text="Cadastro e Edição de Login" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

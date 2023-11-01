@@ -2,13 +2,13 @@ package com.br.amber.logins
 
 import android.content.ContentValues.TAG
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.br.amber.logins.activities.ListLoginsActivity
 import com.br.amber.logins.activities.RegisterEmailAndPasswordActivity
 import com.google.firebase.auth.FirebaseAuth
@@ -16,23 +16,34 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
-class MainActivity : AppCompatActivity() {
+class AuthenticationActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
-    private lateinit var textViewEmail: TextView
-    private lateinit var  textViewPassword: TextView
+    private lateinit var editTextPassword: EditText
+    private lateinit var editTextEmail: EditText
+    private lateinit var buttonAuth: Button
+    private lateinit var textViewRegister: TextView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        val buttonAuth = findViewById<Button>(R.id.buttonAuth)
-        val editTextEmail = findViewById<EditText>(R.id.editTextAuthEmail)
-        val editTextPassword = findViewById<EditText>(R.id.editTextAuthPassword)
+        setContentView(R.layout.authentication)
+        buttonAuth = findViewById(R.id.authenticationButtonAuthenticate)
+        editTextEmail = findViewById(R.id.authenticationEditTextEmail)
+        editTextPassword = findViewById(R.id.authenticationEditTextPassword)
+        textViewRegister = findViewById(R.id.authenticationTextViewRegister)
         auth = Firebase.auth
+
+        textViewRegister.setOnClickListener {
+            val intent = Intent(this, RegisterEmailAndPasswordActivity::class.java)
+            startActivity(intent)
+        }
 
 
 
         buttonAuth.setOnClickListener {
-            auth.signInWithEmailAndPassword(editTextEmail.text.toString(), editTextPassword.text.toString())
+            auth.signInWithEmailAndPassword(
+                editTextEmail.text.toString(),
+                editTextPassword.text.toString()
+            )
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
                         // Sign in success, update UI with the signed-in user's information
@@ -59,7 +70,7 @@ class MainActivity : AppCompatActivity() {
         val currentUser = auth.currentUser
         if (currentUser != null) {
             reload()
-        }else{
+        } else {
             val intent = Intent(this, RegisterEmailAndPasswordActivity::class.java)
             startActivity(intent)
         }

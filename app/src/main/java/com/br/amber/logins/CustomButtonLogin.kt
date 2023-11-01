@@ -3,7 +3,7 @@ package com.br.amber.logins
 import android.content.Context
 import android.util.AttributeSet
 
-class CustomButtonLogin: androidx.appcompat.widget.AppCompatButton {
+class CustomButtonLogin : androidx.appcompat.widget.AppCompatButton {
 
     constructor(context: Context) : super(context) {
         // Inicialização de construtor
@@ -13,17 +13,21 @@ class CustomButtonLogin: androidx.appcompat.widget.AppCompatButton {
         // Inicialização de construtor com atributos
     }
 
-    constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(context, attrs, defStyle) {
+    constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(
+        context,
+        attrs,
+        defStyle
+    ) {
         // Inicialização de construtor com atributos e estilo
     }
 
-    private lateinit var loginKey : String
+    private lateinit var loginKey: String
 
     fun setLoginKey(loginKey: String) {
         this.loginKey = loginKey
     }
 
-    fun getLoginKey(): String{
+    fun getLoginKey(): String {
         return this.loginKey
     }
 
