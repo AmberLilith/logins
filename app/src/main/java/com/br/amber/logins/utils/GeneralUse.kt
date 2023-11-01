@@ -6,7 +6,7 @@ import androidx.appcompat.app.AlertDialog
 
 class GeneralUse {
 
-    companion object{
+    companion object {
         fun showConfirmationDialog(context: Context, message: String, onConfirm: () -> Unit) {
             val builder = AlertDialog.Builder(context)
             builder.setTitle("Confirmação")
@@ -26,10 +26,6 @@ class GeneralUse {
             val dialog = builder.create()
             dialog.show()
         }
-
-
-
-
 
 
     }

@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="black">#FF000000</color>
+    <color name="gray">#D1CDCD</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="buttonDefault">#FFFFFFFF</color>
+    <color name="buttonDelete">#FFFFFFFF</color>
+    <color name="toolBar">#FFFFFFFF</color>
 </resources>
