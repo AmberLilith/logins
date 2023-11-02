@@ -147,3 +147,35 @@ class RegisterEmailAndPasswordActivity : AppCompatActivity() {
         return email.matches(emailRegex.toRegex())
     }
 }
+
+
+/*
+
+
+Aqui está um exemplo de como obter a URL de um arquivo no Cloud Storage:
+
+Kotlin
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
+
+fun main(args: Array<String>) {
+
+    // Cria uma instância do FirebaseStorage
+    val storage = FirebaseStorage.getInstance()
+
+    // Cria uma referência para o bucket de armazenamento
+    val bucket = storage.bucket("my-bucket")
+
+    // Cria uma referência para o arquivo
+    val fileReference = bucket.file("my-file.jpg")
+
+    // Obtém a URL do arquivo
+    val downloadUrl = fileReference.getDownloadUrl()
+
+    // Insere a URL no ImageView
+    imageView.setImageURI(downloadUrl)
+}
+
+
+
+}*/
