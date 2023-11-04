@@ -15,15 +15,49 @@
     <string name="textViewRegisterPasswordText">Senha:</string>
     <string name="createOrEditLoginTextViewRepeatPasswordText">Repita a senha:</string>
     <string name="textViewRegisterEmailText">Email:</string>
-    <string name="createOrEditLoginEditTextRepeatPasswordHnt">Digite a senha</string>
+    <string name="createOrEditLoginEditTextRepeatPasswordHnt">Repita a senha</string>
     <string name="createOrEditLoginTextViewPlatformNameText">Nome da plataforma/site</string>
     <string name="createOrEditLoginEditTextPlatformNameHint">Nome da plataforma/site</string>
     <string name="textViewUserText">Nome usuario:</string>
-    <string name="createOrEditLoginTextViewPassworText">Digite a senha:</string>
+    <string name="createOrEditLoginTextViewGeneratePasswordText">Configurar senha:</string>
     <string name="createOrEditLoginEditTextPasswordHint">Digite a senha:</string>
     <string name="createOrEditLoginEditTextUserHint">Nome usuário</string>
     <string name="createOrEditLoginButtonCancelText">Cancelar</string>
     <string name="createOrEditLoginButtonSaveText">Salvar</string>
     <string name="registerEmailPasswordTextTextUserNameHint">Digite seu nome</string>
     <string name="registerEmailPasswordTextViewUserNameText">Nome:</string>
+    <string name="modal_password_optionsRadioButtonAlphaNumOnlyText">Alfanumérico (Ex.: ABCabc123)</string>
+    <string name="modal_password_optionsRadioButtonAlphaNumSpecialCharactersUpAndLowCaseText">Alfanumérico (Ex.: ABCabc@#$123)</string>
+    <string name="modal_password_optionsRadioButtonOnlyNumbersText">Somente números (Ex.: 123)</string>
+    <string name="modal_password_optionsRadioButtonOnlyLettersText">Somente letras (Ex.: ABCabc)</string>
+    <string name="modal_password_optionsTextViewTitleText">Formatar Senha</string>
+    <string name="modal_password_optionsTextViewMinLengthText">Tamanho mínimo:</string>
+    <string name="modal_password_optionsTextViewMaxLengthText">Tamanho da senha:</string>
+    <string name="modal_password_optionsButtonCancelText">Cancelar</string>
+    <string name="modal_password_optionsButtonGeneratePasswordText">Gerar</string>
+    <string name="modal_password_optionsTextViewPasswordFormatsText">Escolha o formato da senha:</string>
+    <string name="modal_password_optionsTextViewPasswordLengthText">Indique o tamanho da senha:</string>
+    <string name="createOrEditLoginTextViewPasswordText">Digite a senha:</string>
+    <string-array name="list1to20">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
+        <item>16</item>
+        <item>17</item>
+        <item>18</item>
+        <item>19</item>
+        <item>20</item>
+    </string-array>
 </resources>

@@ -30,7 +30,6 @@ class Encript {
             return keyGenerator.generateKey()
         }
 
-        // Criptografar dados
         fun encryptData(dataToEncrypt: ByteArray, key: Key): Pair<ByteArray, ByteArray> {
             val cipher = Cipher.getInstance("AES/CBC/PKCS7Padding")
             cipher.init(Cipher.ENCRYPT_MODE, key)
@@ -39,7 +38,6 @@ class Encript {
             return Pair(encryptedData, iv)
         }
 
-        // Descriptografar dados
         fun decryptData(encryptedData: ByteArray, key: Key, iv: ByteArray): ByteArray {
             val cipher = Cipher.getInstance("AES/CBC/PKCS7Padding")
             val ivSpec = IvParameterSpec(iv)

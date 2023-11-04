@@ -3,6 +3,7 @@ package com.br.amber.logins.activities
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.br.amber.logins.R
@@ -67,7 +68,7 @@ class ListLoginsActivity : AppCompatActivity() {
 
 
                 override fun onCancelled(databaseError: DatabaseError) {
-                    println("Erro ao recuperar dados: ${databaseError.message}")
+                    Log.e(this.javaClass.name, "Erro ao recuperar dados: ${databaseError.message}")
                 }
             })
 

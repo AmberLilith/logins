@@ -1,6 +1,7 @@
 package com.br.amber.logins.services
 
 import android.content.Context
+import android.util.Log
 import android.widget.Toast
 import com.br.amber.logins.models.Login
 import com.google.firebase.auth.FirebaseAuth
@@ -25,7 +26,7 @@ class LoginService {
             transactionMessage = "Login cadastrado com sucesso!"
         } catch (e: Exception) {
             transactionMessage = "Não foi possível salvar os dados!"
-            println("${transactionMessage} Erro: ${e.message}")
+            Log.e(this.javaClass.simpleName,"${transactionMessage} Erro: ${e.message}")
         } finally {
             Toast.makeText(context, transactionMessage, Toast.LENGTH_LONG).show()
         }
@@ -38,7 +39,7 @@ class LoginService {
             transactionMessage = "Alterações salvas com sucesso!"
         } catch (e: Exception) {
             transactionMessage = "Não foi possível salvar os dados!"
-            println("${transactionMessage} Erro: ${e.message}")
+            Log.e(this.javaClass.simpleName,"${transactionMessage} Erro: ${e.message}")
         } finally {
             Toast.makeText(context, transactionMessage, Toast.LENGTH_LONG).show()
         }
@@ -53,18 +54,18 @@ class LoginService {
                             val login = dataSnapshot.getValue(Login::class.java)
                             callback(login)
                         } else {
-                            println("O nó $loginKey não existe")
+                            Log.d(this.javaClass.simpleName,"O nó $loginKey não existe")
                             callback(null)
                         }
                     }
 
                     override fun onCancelled(databaseError: DatabaseError) {
-                        println("Erro ao recuperar dados: ${databaseError.message}")
+                        Log.e(this.javaClass.simpleName,"Erro ao recuperar dados: ${databaseError.message}")
                         callback(null)
                     }
                 })
         } catch (e: Exception) {
-            println("Não foi possível recuperar o login! Erro: ${e.message}")
+            Log.e(this.javaClass.simpleName,"Não foi possível recuperar o login! Erro: ${e.message}")
         }
 
     }
@@ -76,7 +77,7 @@ class LoginService {
             transactionMessage = "Login excluído!"
         } catch (e: Exception) {
             transactionMessage = "Não foi possível deletar o login!"
-            println("${transactionMessage} Erro: ${e.message}")
+            Log.e(this.javaClass.simpleName,"${transactionMessage} Erro: ${e.message}")
         } finally {
             Toast.makeText(context, transactionMessage, Toast.LENGTH_LONG).show()
         }

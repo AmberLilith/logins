@@ -1,13 +1,19 @@
 package com.br.amber.logins.activities
 
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.ContentValues.TAG
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.text.InputType
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.br.amber.logins.AuthenticationActivity
+import com.br.amber.logins.DialogPasswordOptions
 import com.br.amber.logins.R
 import com.br.amber.logins.models.User
 import com.google.firebase.auth.FirebaseAuth
@@ -24,15 +30,23 @@ class RegisterEmailAndPasswordActivity : AppCompatActivity() {
     private lateinit var editTextPassword: EditText
     private lateinit var editTextRepeatPassword: EditText
     private lateinit var buttonRegister: Button
+    private lateinit var buttonCancel: Button
+    private lateinit var buttonGeneratePassword: Button
+    private lateinit var buttonViewPassword: Button
+    private lateinit var buttonCopyPassword: Button
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register_email_and_password)
 
         editTextEmail = findViewById(R.id.registerEmailPasswordEditTextEmail)
-        editTextPassword = findViewById(R.id.createOrEditLoginEditTextPassword)
-        editTextRepeatPassword = findViewById(R.id.createOrEditLoginEditTextRepeatPassword)
+        editTextPassword = findViewById(R.id.registerEmailPasswordEditTextPassword)
+        editTextRepeatPassword = findViewById(R.id.registerEmailPasswordEditTextRepeatPassword)
         editTextUserName = findViewById(R.id.registerEmailPasswordTextTextUserName)
         buttonRegister = findViewById(R.id.registerEmailPasswordButtonRegister)
+        buttonCancel = findViewById(R.id.registerEmailPasswordButtonCancel)
+        buttonGeneratePassword = findViewById(R.id.registerEmailPasswordButtonGeneratePassword)
+        buttonViewPassword = findViewById(R.id.registerEmailPasswordButtonViewPassword)
+        buttonCopyPassword = findViewById(R.id.registerEmailPasswordButtonCopyPassword)
         auth = Firebase.auth
 
         buttonRegister.setOnClickListener {
@@ -67,42 +81,54 @@ class RegisterEmailAndPasswordActivity : AppCompatActivity() {
                     }
             }
         }
-    }
+
+        buttonCancel.setOnClickListener {
+            val intent = Intent(this, AuthenticationActivity::class.java)
+            startActivity(intent)
+        }
+
+        buttonGeneratePassword.setOnClickListener {
+            showDialogPasswordOPtions()
+        }
+
+        var invisiblePassword = true
+        buttonViewPassword.setOnClickListener {
+            if(invisiblePassword){
+                editTextPassword.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_NORMAL
+                editTextRepeatPassword.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_NORMAL
+                buttonViewPassword.setBackgroundResource(R.drawable.baseline_visibility_off_24)
+            }else{
+                editTextPassword.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+                editTextRepeatPassword.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+                buttonViewPassword.setBackgroundResource(R.drawable.baseline_visibility_24)
+            }
+            invisiblePassword = !invisiblePassword
+        }
+
+        buttonCopyPassword.setOnClickListener {
+            val clipboardManager = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            val clipData = ClipData.newPlainText("Texto Copiado", editTextPassword.text)
+            clipboardManager.setPrimaryClip(clipData)
+        }
+        }
+
+
 
     private fun updateUI(user: FirebaseUser?) {
         if (user != null) {
-            // O usuário está logado, você pode atualizar a UI de acordo.
-            // Por exemplo, você pode redirecioná-los para outra atividade ou exibir uma mensagem de boas-vindas.
             val welcomeMessage = "Bem-vindo, ${user.email}!"
             Toast.makeText(this, welcomeMessage, Toast.LENGTH_SHORT).show()
 
             val intent = Intent(this, ListLoginsActivity::class.java)
             startActivity(intent)
-
-            // Você pode redirecionar o usuário para outra atividade
-            // val intent = Intent(this, DashboardActivity::class.java)
-            // startActivity(intent)
-
-            // Ou você pode realizar outras ações, como atualizar elementos da interface do usuário.
-            // Exemplo: Atualizar um TextView
-            // val welcomeTextView = findViewById<TextView>(R.id.welcomeTextView)
-            // welcomeTextView.text = welcomeMessage
         } else {
-            // O registro falhou, você pode lidar com isso aqui.
-            // Por exemplo, exiba uma mensagem de erro na interface do usuário.
-            // Ou limpe os campos de entrada de email e senha.
             val errorMessage = "Falha no registro."
             Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
-
-            // Exemplo: Limpar os campos de entrada
-            // editTextEmail.text.clear()
-            // editTextPassword.text.clear()
         }
     }
 
     public override fun onStart() {
         super.onStart()
-        // Check if user is signed in (non-null) and update UI accordingly.
         val currentUser = auth.currentUser
         if (currentUser != null) {
             reload()
@@ -134,7 +160,7 @@ class RegisterEmailAndPasswordActivity : AppCompatActivity() {
         ) {
             editTextPassword.error = "password inválido!"
             return false
-        } else if (editTextPassword.text.trim() != editTextRepeatPassword.text.trim()) {
+        } else if (editTextPassword.text.trim().toString() != editTextRepeatPassword.text.trim().toString()) {
             editTextPassword.error = "As senhas não conferem!"
             editTextRepeatPassword.error = "As senhas não conferem!"
             return false
@@ -146,7 +172,15 @@ class RegisterEmailAndPasswordActivity : AppCompatActivity() {
         val emailRegex = "^[A-Za-z](.*)([@]{1})(.{1,})(\\.)(.{1,})"
         return email.matches(emailRegex.toRegex())
     }
+
+    fun showDialogPasswordOPtions() {
+        val dialogPasswordOptions = DialogPasswordOptions()
+        dialogPasswordOptions.show(supportFragmentManager, "DialogPassword")
+        dialogPasswordOptions.showDialogPasswordOptions(editTextPassword, editTextRepeatPassword)
+
+    }
 }
+
 
 
 /*

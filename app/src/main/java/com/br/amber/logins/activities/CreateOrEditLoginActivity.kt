@@ -1,13 +1,18 @@
 package com.br.amber.logins.activities
 
 import android.annotation.SuppressLint
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
+import android.text.InputType
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.br.amber.logins.DialogPasswordOptions
 import com.br.amber.logins.R
 import com.br.amber.logins.models.Login
 import com.br.amber.logins.services.LoginService
@@ -17,9 +22,12 @@ class CreateOrEditLoginActivity : AppCompatActivity() {
 
     private lateinit var platformNameEditText: EditText
     private lateinit var userEditText: EditText
-    private lateinit var passwordEditText: EditText
-    private lateinit var passwordRepeatEditText: EditText
+    private lateinit var editTextpassword: EditText
+    private lateinit var editTextRepeatpassword: EditText
     private lateinit var titleTextView: TextView
+    private lateinit var buttonCallDialogPasswordOptions: Button
+    private lateinit var buttonCopyPassword: Button
+    private lateinit var buttonViewPassword: Button
     private lateinit var buttonSave: Button
     private lateinit var buttonCancel: Button
     private lateinit var receivedParameter: Parameters
@@ -31,8 +39,11 @@ class CreateOrEditLoginActivity : AppCompatActivity() {
 
         platformNameEditText = findViewById(R.id.createOrEditLoginEditTextPlatformName)
         userEditText = findViewById(R.id.createOrEditLoginEditTextUser)
-        passwordEditText = findViewById(R.id.createOrEditLoginEditTextPassword)
-        passwordRepeatEditText = findViewById(R.id.createOrEditLoginEditTextRepeatPassword)
+        editTextpassword = findViewById(R.id.createOrEditLoginEditTextPassword)
+        editTextRepeatpassword = findViewById(R.id.createOrEditLoginEditTextRepeatPassword)
+        buttonCallDialogPasswordOptions = findViewById(R.id.createOrEditLoginButtonGeneratePassword)
+        buttonCopyPassword = findViewById(R.id.createOrEditLoginButtonCopyPassword)
+        buttonViewPassword = findViewById(R.id.createOrEditLoginButtonViewPassword)
         titleTextView = findViewById(R.id.createOrEditLoginTitle)
         buttonSave = findViewById(R.id.createOrEditLoginButtonSave)
         buttonCancel = findViewById(R.id.createOrEditLoginButtonCancel)
@@ -43,7 +54,7 @@ class CreateOrEditLoginActivity : AppCompatActivity() {
             if (validateIfFieldsAreValids()) {
                 val plataformName = platformNameEditText.text.trim().toString()
                 val user = userEditText.text.trim().toString()
-                val password = passwordEditText.text.trim().toString()
+                val password = editTextpassword.text.trim().toString()
                 if (receivedParameter.method == "create") {
                     loginService.createLogin(Login(plataformName, user, password), this)
                 } else if (receivedParameter.method == "edit") {
@@ -59,6 +70,31 @@ class CreateOrEditLoginActivity : AppCompatActivity() {
 
         buttonCancel.setOnClickListener {
             returnToListLoginsActivity()
+        }
+
+        buttonCallDialogPasswordOptions.setOnClickListener{
+            showDialogPasswordOPtions()
+        }
+
+        buttonCopyPassword.setOnClickListener{
+            val clipboardManager = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            val clipData = ClipData.newPlainText("Texto Copiado", editTextpassword.text)
+            clipboardManager.setPrimaryClip(clipData)
+        }
+
+        var invisiblePassword = true
+
+        buttonViewPassword.setOnClickListener{
+            if(invisiblePassword){
+                editTextpassword.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_NORMAL
+                editTextRepeatpassword.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_NORMAL
+                buttonViewPassword.setBackgroundResource(R.drawable.baseline_visibility_off_24)
+            }else{
+                editTextpassword.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+                editTextRepeatpassword.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+                buttonViewPassword.setBackgroundResource(R.drawable.baseline_visibility_24)
+            }
+            invisiblePassword = !invisiblePassword
         }
     }
 
@@ -82,9 +118,9 @@ class CreateOrEditLoginActivity : AppCompatActivity() {
                         .newEditable(login.plataformName)
                     userEditText.text =
                         Editable.Factory.getInstance().newEditable(login.user)
-                    passwordEditText.text =
+                    editTextpassword.text =
                         Editable.Factory.getInstance().newEditable(login.password)
-                    passwordRepeatEditText.text =
+                    editTextRepeatpassword.text =
                         Editable.Factory.getInstance().newEditable(login.password)
                 }
             }
@@ -100,17 +136,24 @@ class CreateOrEditLoginActivity : AppCompatActivity() {
         } else if (userEditText.text.trim().isEmpty()) {
             userEditText.error = "Usuário inválido!"
             return false
-        } else if (passwordEditText.text.trim().isEmpty()) {
-            passwordEditText.error = "password inválido!"
+        } else if (editTextpassword.text.trim().isEmpty()) {
+            editTextpassword.error = "password inválido!"
             return false
-        } else if (passwordEditText.text.trim().toString() != passwordRepeatEditText.text.trim()
+        } else if (editTextpassword.text.trim().toString() != editTextRepeatpassword.text.trim()
                 .toString()
         ) {
-            passwordEditText.error = "As senhas não conferem!"
-            passwordRepeatEditText.error = "As senhas não conferem!"
+            editTextpassword.error = "As senhas não conferem!"
+            editTextRepeatpassword.error = "As senhas não conferem!"
             return false
         }
         return true
+    }
+
+    fun showDialogPasswordOPtions() {
+        val dialogPasswordOptions = DialogPasswordOptions()
+        dialogPasswordOptions.show(supportFragmentManager, "DialogPassword")
+        dialogPasswordOptions.showDialogPasswordOptions(editTextpassword, editTextRepeatpassword)
+
     }
 
     data class Parameters(
