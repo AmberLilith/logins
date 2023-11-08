@@ -12,7 +12,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.br.amber.logins.DialogPasswordOptions
+import com.br.amber.logins.DialogGeneratePassword
 import com.br.amber.logins.R
 import com.br.amber.logins.models.Login
 import com.br.amber.logins.services.LoginService
@@ -112,7 +112,7 @@ class CreateOrEditLoginActivity : AppCompatActivity() {
         if (receivedParameter.method == "edit") {
             titleTextView.text = "Editar dados do login"
             val loginKey = receivedParameter.loginKey
-            loginService.getLoginForEdition(this, loginKey) { login ->
+            loginService.getLoginForEdition(loginKey) { login ->
                 if (login != null) {
                     platformNameEditText.text = Editable.Factory.getInstance()
                         .newEditable(login.plataformName)
@@ -150,9 +150,9 @@ class CreateOrEditLoginActivity : AppCompatActivity() {
     }
 
     fun showDialogPasswordOPtions() {
-        val dialogPasswordOptions = DialogPasswordOptions()
-        dialogPasswordOptions.show(supportFragmentManager, "DialogPassword")
-        dialogPasswordOptions.showDialogPasswordOptions(editTextpassword, editTextRepeatpassword)
+        val dialogGeneratePassword = DialogGeneratePassword()
+        dialogGeneratePassword.show(supportFragmentManager, "DialogPassword")
+        dialogGeneratePassword.showDialogPasswordOptions(editTextpassword, editTextRepeatpassword)
 
     }
 

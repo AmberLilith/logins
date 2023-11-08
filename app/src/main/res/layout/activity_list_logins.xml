@@ -24,7 +24,7 @@
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewLogins"
+        android:id="@+id/listLoginsRecyclerViewLogins"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:padding="8dp"
@@ -39,7 +39,7 @@
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButtonCreateNewLogin"
+        android:id="@+id/listLoginsFloatingActionButtonCreateNewLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="292dp"
@@ -48,20 +48,23 @@
         android:contentDescription="Cadastrar novo login"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@android:drawable/ic_input_add" />
+        app:srcCompat="@android:drawable/ic_input_add"
+        android:focusable="true" />
 
     <ImageView
-        android:id="@+id/activityListLoginUserImage"
+        android:id="@+id/listLoginsImageViewLoggedUserPicture"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:clickable="true"
+        android:focusable="true"
         app:layout_constraintBottom_toBottomOf="@+id/activityListLoginToolbar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/activityListLoginToolbar"
         app:srcCompat="@drawable/background_rounded" />
 
     <TextView
-        android:id="@+id/activityListLoginTitle"
+        android:id="@+id/listLoginsTextViewTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Logins Cadastrados"

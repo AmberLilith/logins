@@ -7,13 +7,15 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
+import android.net.Uri
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.br.amber.logins.AuthenticationActivity
-import com.br.amber.logins.DialogPasswordOptions
+import com.br.amber.logins.DialogGeneratePassword
 import com.br.amber.logins.R
 import com.br.amber.logins.models.User
 import com.google.firebase.auth.FirebaseAuth
@@ -21,6 +23,8 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.squareup.picasso.Picasso
 
 class RegisterEmailAndPasswordActivity : AppCompatActivity() {
 
@@ -34,11 +38,15 @@ class RegisterEmailAndPasswordActivity : AppCompatActivity() {
     private lateinit var buttonGeneratePassword: Button
     private lateinit var buttonViewPassword: Button
     private lateinit var buttonCopyPassword: Button
+    private lateinit var buttonUploadPicture: Button
+    private lateinit var imageViewPicture: ImageView
+    private var imageUri: Uri? = null
+    private var loggedUser: FirebaseUser? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_register_email_and_password)
+        setContentView(R.layout.activity_register_user)
 
-        editTextEmail = findViewById(R.id.registerEmailPasswordEditTextEmail)
+        editTextEmail = findViewById(R.id.registerUserEditTextEmail)
         editTextPassword = findViewById(R.id.registerEmailPasswordEditTextPassword)
         editTextRepeatPassword = findViewById(R.id.registerEmailPasswordEditTextRepeatPassword)
         editTextUserName = findViewById(R.id.registerEmailPasswordTextTextUserName)
@@ -47,6 +55,8 @@ class RegisterEmailAndPasswordActivity : AppCompatActivity() {
         buttonGeneratePassword = findViewById(R.id.registerEmailPasswordButtonGeneratePassword)
         buttonViewPassword = findViewById(R.id.registerEmailPasswordButtonViewPassword)
         buttonCopyPassword = findViewById(R.id.registerEmailPasswordButtonCopyPassword)
+        buttonUploadPicture = findViewById(R.id.registerUserButtonUploadPicture)
+        imageViewPicture = findViewById(R.id.registerUserImageViewPicture)
         auth = Firebase.auth
 
         buttonRegister.setOnClickListener {
@@ -57,17 +67,17 @@ class RegisterEmailAndPasswordActivity : AppCompatActivity() {
                 )
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
-                            // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success")
-                            val user = auth.currentUser
-                            val userId = user!!.uid
+                            loggedUser = auth.currentUser!!
+                            val userId = loggedUser!!.uid
                             val userName = editTextUserName.text.toString()
                             val database = Firebase.database
                             val data = mutableMapOf<String, Any>()
                             data["datas"] = User(userName, "")
                             data["logins"] = ""
                             database.reference.child(userId).setValue(data)
-                            updateUI(user)
+                            salvePictureInCloudStorage()
+                            updateUI(loggedUser)
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.exception)
@@ -110,7 +120,42 @@ class RegisterEmailAndPasswordActivity : AppCompatActivity() {
             val clipData = ClipData.newPlainText("Texto Copiado", editTextPassword.text)
             clipboardManager.setPrimaryClip(clipData)
         }
+
+        buttonUploadPicture.setOnClickListener {
+            // Abre a galeria de imagens
+            val intent = Intent()
+            intent.type = "image/*"
+            intent.action = Intent.ACTION_GET_CONTENT
+            startActivityForResult(intent, 1)
         }
+        }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 1 && resultCode == RESULT_OK) {imageUri = data?.data ?: return
+            Picasso.get().load(imageUri).into(imageViewPicture)
+        }
+    }
+
+    private fun salvePictureInCloudStorage() {
+        if(loggedUser != null){
+            if(imageUri != null){
+                val storage = FirebaseStorage.getInstance()
+                val storageRef = storage.reference
+                val currentUserId = loggedUser!!.uid
+                val imageName = "$currentUserId.jpg"
+                val imageRef = storageRef.child("images").child(currentUserId).child(imageName)
+                imageRef.putFile(imageUri!!)
+                    .addOnSuccessListener {
+                        Log.d(this.javaClass.simpleName, "Imagem salva no Cloud Storage")
+                    }
+                    .addOnFailureListener {
+                        Log.d(this.javaClass.simpleName, "Imagem não salva no Cloud Storage. Erro: ${it.message}")
+                    }
+            }
+        }
+    }
+
 
 
 
@@ -174,42 +219,13 @@ class RegisterEmailAndPasswordActivity : AppCompatActivity() {
     }
 
     fun showDialogPasswordOPtions() {
-        val dialogPasswordOptions = DialogPasswordOptions()
-        dialogPasswordOptions.show(supportFragmentManager, "DialogPassword")
-        dialogPasswordOptions.showDialogPasswordOptions(editTextPassword, editTextRepeatPassword)
+        val dialogGeneratePassword = DialogGeneratePassword()
+        dialogGeneratePassword.show(supportFragmentManager, "DialogPassword")
+        dialogGeneratePassword.showDialogPasswordOptions(editTextPassword, editTextRepeatPassword)
 
     }
 }
 
 
 
-/*
 
-
-Aqui está um exemplo de como obter a URL de um arquivo no Cloud Storage:
-
-Kotlin
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
-
-fun main(args: Array<String>) {
-
-    // Cria uma instância do FirebaseStorage
-    val storage = FirebaseStorage.getInstance()
-
-    // Cria uma referência para o bucket de armazenamento
-    val bucket = storage.bucket("my-bucket")
-
-    // Cria uma referência para o arquivo
-    val fileReference = bucket.file("my-file.jpg")
-
-    // Obtém a URL do arquivo
-    val downloadUrl = fileReference.getDownloadUrl()
-
-    // Insere a URL no ImageView
-    imageView.setImageURI(downloadUrl)
-}
-
-
-
-}*/

@@ -45,7 +45,7 @@ class LoginService {
         }
     }
 
-    fun getLoginForEdition(context: Context, loginKey: String, callback: (Login?) -> Unit) {
+    fun getLoginForEdition(loginKey: String, callback: (Login?) -> Unit) {
         try {
             userNodeReference.child(loginKey)
                 .addListenerForSingleValueEvent(object : ValueEventListener {
