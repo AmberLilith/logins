@@ -23,6 +23,7 @@ class AuthenticationActivity : AppCompatActivity() {
     private lateinit var editTextEmail: EditText
     private lateinit var buttonAuth: Button
     private lateinit var textViewRegister: TextView
+    private lateinit var textViewResetPassword: TextView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.authentication)
@@ -30,11 +31,17 @@ class AuthenticationActivity : AppCompatActivity() {
         editTextEmail = findViewById(R.id.authenticationEditTextEmail)
         editTextPassword = findViewById(R.id.authenticationEditTextPassword)
         textViewRegister = findViewById(R.id.authenticationTextViewRegister)
+        textViewResetPassword = findViewById(R.id.authenticationTextViewForgottenPassword)
         auth = Firebase.auth
 
         textViewRegister.setOnClickListener {
             val intent = Intent(this, RegisterEmailAndPasswordActivity::class.java)
             startActivity(intent)
+        }
+
+        textViewResetPassword.setOnClickListener {
+            val modalResetPassword = DialogResetPassoword()
+            modalResetPassword.show(supportFragmentManager, "DialogResetPassword")
         }
 
 
@@ -64,7 +71,7 @@ class AuthenticationActivity : AppCompatActivity() {
         }
     }
 
-    public override fun onStart() {
+    /*public override fun onStart() {
         super.onStart()
         // Check if user is signed in (non-null) and update UI accordingly.
         val currentUser = auth.currentUser
@@ -74,7 +81,7 @@ class AuthenticationActivity : AppCompatActivity() {
             val intent = Intent(this, RegisterEmailAndPasswordActivity::class.java)
             startActivity(intent)
         }
-    }
+    }*/
 
     private fun reload() {
         val user = auth.currentUser
@@ -91,32 +98,14 @@ class AuthenticationActivity : AppCompatActivity() {
 
     private fun updateUI(user: FirebaseUser?) {
         if (user != null) {
-            // O usuário está logado, você pode atualizar a UI de acordo.
-            // Por exemplo, você pode redirecioná-los para outra atividade ou exibir uma mensagem de boas-vindas.
             val welcomeMessage = "Bem-vindo, ${user.email}!"
             Toast.makeText(this, welcomeMessage, Toast.LENGTH_SHORT).show()
 
             val intent = Intent(this, ListLoginsActivity::class.java)
             startActivity(intent)
-
-            // Você pode redirecionar o usuário para outra atividade
-            // val intent = Intent(this, DashboardActivity::class.java)
-            // startActivity(intent)
-
-            // Ou você pode realizar outras ações, como atualizar elementos da interface do usuário.
-            // Exemplo: Atualizar um TextView
-            // val welcomeTextView = findViewById<TextView>(R.id.welcomeTextView)
-            // welcomeTextView.text = welcomeMessage
         } else {
-            // O registro falhou, você pode lidar com isso aqui.
-            // Por exemplo, exiba uma mensagem de erro na interface do usuário.
-            // Ou limpe os campos de entrada de email e senha.
             val errorMessage = "Falha no registro."
             Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
-
-            // Exemplo: Limpar os campos de entrada
-            // editTextEmail.text.clear()
-            // editTextPassword.text.clear()
         }
     }
 }

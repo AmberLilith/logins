@@ -4,19 +4,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintEnd_toEndOf="parent">
+    android:layout_height="match_parent">
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        tools:context=".activities.CreateOrEditLoginActivity">
+        tools:context=".AuthenticationActivity">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/createOrEditLoginToolbar"
+            android:id="@+id/registerUserToolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#5E5C5C"
@@ -24,7 +22,7 @@
             android:textAlignment="center"
             android:theme="?attr/actionBarTheme"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -32,53 +30,87 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="120dp"
+            android:layout_marginTop="116dp"
             android:background="@color/gray"
+            android:gravity="center_vertical"
             android:orientation="vertical"
             android:padding="16dp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/createOrEditLoginToolbar"
-            app:layout_constraintVertical_bias="0.0">
+            app:layout_constraintTop_toBottomOf="@+id/registerUserToolbar">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <!--<TextView
+                    android:id="@+id/registerEmailPasswordTextTextGeneratePassword"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:text="@string/createOrEditLoginTextViewGeneratePasswordText" />-->
+
+                <TextView
+                    android:id="@+id/registerUserTextViewUploadPicture"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/registerUserTextViewUploadPictureText" />
+
+                <Button
+                    android:id="@+id/registerUserButtonUploadPicture"
+                    style="@style/Widget.AppCompat.Button"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/baseline_photo_50" />
+
+                <ImageView
+                    android:id="@+id/registerUserImageViewPicture"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:contentDescription="@string/registerUserImageViewPictureContentDescription"/>
+
+
+            </LinearLayout>
 
             <TextView
-                android:id="@+id/createOrEditLoginTextViewPlatformName"
+                android:id="@+id/registerUserTextViewEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/createOrEditLoginTextViewPlatformNameText" />
+                android:text="@string/textViewRegisterEmailText" />
 
             <EditText
-                android:id="@+id/createOrEditLoginEditTextPlatformName"
+                android:id="@+id/registerUserEditTextEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints="emailAddress"
+                android:ems="10"
+                android:hint="@string/editTxtRegisterEmailHint"
+                android:inputType="textEmailAddress"
+                android:text="teste@gmail.com" />
+
+            <TextView
+                android:id="@+id/registerEmailPasswordTextViewUserName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/registerEmailPasswordTextViewUserNameText" />
+
+            <EditText
+                android:id="@+id/registerEmailPasswordTextTextUserName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="@string/createOrEditLoginEditTextPlatformNameHint"
-                android:inputType="text" />
-
-            <TextView
-                android:id="@+id/createOrEditLoginTextViewUser"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/textViewUserText" />
-
-            <EditText
-                android:id="@+id/createOrEditLoginEditTextUser"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="@string/createOrEditLoginEditTextUserHint"
+                android:hint="@string/registerEmailPasswordTextTextUserNameHint"
                 android:inputType="text"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.502"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/createOrEditLoginEditTextPlatformName" />
+                android:text="Teste" />
+
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -86,14 +118,14 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/createOrEditLoginTextViewGeneratePassword"
+                        android:id="@+id/registerEmailPasswordTextTextGeneratePassword"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="end"
                         android:text="@string/createOrEditLoginTextViewGeneratePasswordText" />
 
                     <Button
-                        android:id="@+id/createOrEditLoginButtonGeneratePassword"
+                        android:id="@+id/registerEmailPasswordButtonGeneratePassword"
                         style="@style/Widget.AppCompat.Button"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
@@ -101,31 +133,32 @@
                         android:background="@drawable/baseline_settings_24" />
                 </LinearLayout>
 
-
                 <TextView
-                    android:id="@+id/createOrEditLoginTextViewPassword"
+                    android:id="@+id/registerEmailPasswordTextViewPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/createOrEditLoginTextViewPasswordText" />
+                    android:text="@string/createOrEditLoginTextViewGeneratePasswordText" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:padding="0dp">
 
                     <EditText
-                        android:id="@+id/createOrEditLoginEditTextPassword"
+                        android:id="@+id/registerEmailPasswordEditTextPassword"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ems="10"
                         android:hint="@string/createOrEditLoginEditTextPasswordHint"
                         android:inputType="textPassword"
+                        android:text="teste123"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/createOrEditLoginEditTextUser" />
 
                     <Button
-                        android:id="@+id/createOrEditLoginButtonViewPassword"
+                        android:id="@+id/registerEmailPasswordButtonViewPassword"
                         style="@style/Widget.AppCompat.Button"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
@@ -133,81 +166,73 @@
                         android:background="@drawable/baseline_visibility_24" />
 
                     <Button
-                        android:id="@+id/createOrEditLoginButtonCopyPassword"
+                        android:id="@+id/registerEmailPasswordButtonCopyPassword"
                         style="@style/Widget.AppCompat.Button"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_gravity="center"
                         android:background="@drawable/baseline_content_copy_24" />
 
-
                 </LinearLayout>
 
                 <TextView
-                    android:id="@+id/createOrEditLoginTextViewRepeatPassword"
+                    android:id="@+id/registerEmailPasswordTextViewRepeatPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/createOrEditLoginTextViewRepeatPasswordText" />
 
                 <EditText
-                    android:id="@+id/createOrEditLoginEditTextRepeatPassword"
+                    android:id="@+id/registerEmailPasswordEditTextRepeatPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:autofillHints="password"
                     android:ems="10"
                     android:hint="@string/createOrEditLoginEditTextRepeatPasswordHnt"
-                    android:inputType="textPassword" />
-
-
+                    android:inputType="textPassword"
+                    android:text="teste123"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/registerUserEditTextEmail" />
             </LinearLayout>
 
 
             <LinearLayout
-                android:id="@+id/createOrEditLoginLinearLayoutButtonsCancelSave"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
+                android:layout_gravity="end"
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/createOrEditLoginButtonCancel"
+                    android:id="@+id/registerEmailPasswordButtonCancel"
                     style="@style/Widget.AppCompat.Button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/createOrEditLoginButtonCancelText"
-                    tools:layout_editor_absoluteX="70dp"
-                    tools:layout_editor_absoluteY="322dp" />
+                    android:text="Cencelar" />
 
                 <Button
-                    android:id="@+id/createOrEditLoginButtonSave"
+                    android:id="@+id/registerEmailPasswordButtonRegister"
                     style="@style/Widget.AppCompat.Button"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/createOrEditLoginButtonSaveText"
-                    tools:ignore="MissingConstraints"
-                    tools:layout_editor_absoluteX="200dp"
-                    tools:layout_editor_absoluteY="322dp" />
+                    android:text="@string/buttonRegisterText" />
 
             </LinearLayout>
+
 
         </LinearLayout>
 
         <TextView
-            android:id="@+id/createOrEditLoginTitle"
+            android:id="@+id/registerEmailPasswordTextViewTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/textviewRegisterTitle"
             android:textColor="#FDFCFC"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="@+id/createOrEditLoginToolbar"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="@+id/registerUserToolbar"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/createOrEditLoginToolbar"
-            tools:text="Cadastro e Edição de Login" />
-
+            app:layout_constraintStart_toStartOf="@+id/registerUserToolbar"
+            app:layout_constraintTop_toTopOf="@+id/registerUserToolbar" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-
 </ScrollView>
-
-

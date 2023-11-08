@@ -101,11 +101,11 @@
             app:layout_constraintTop_toBottomOf="@+id/authenticationEditTextPassword" />
 
         <TextView
-            android:id="@+id/authenticationTextViewRegisterForgottenPassword"
+            android:id="@+id/authenticationTextViewForgottenPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:linksClickable="true"
-            android:text="@string/authenticationTextViewRegisterForgottenPasswordText"
+            android:text="@string/authenticationTextViewForgottenPasswordText"
             android:textAlignment="center"
             android:layout_marginBottom="10dp"
             app:layout_constraintEnd_toEndOf="parent"
