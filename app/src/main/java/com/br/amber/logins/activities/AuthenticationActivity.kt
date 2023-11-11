@@ -1,4 +1,4 @@
-package com.br.amber.logins
+package com.br.amber.logins.activities
 
 import android.content.ContentValues.TAG
 import android.content.Intent
@@ -9,8 +9,8 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.br.amber.logins.activities.ListLoginsActivity
-import com.br.amber.logins.activities.RegisterEmailAndPasswordActivity
+import com.br.amber.logins.R
+import com.br.amber.logins.dialogs.DialogResetPassoword
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
@@ -35,7 +35,7 @@ class AuthenticationActivity : AppCompatActivity() {
         auth = Firebase.auth
 
         textViewRegister.setOnClickListener {
-            val intent = Intent(this, RegisterEmailAndPasswordActivity::class.java)
+            val intent = Intent(this, RegisterUserActivity::class.java)
             startActivity(intent)
         }
 

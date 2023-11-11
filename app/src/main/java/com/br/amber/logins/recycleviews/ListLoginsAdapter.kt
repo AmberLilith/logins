@@ -8,8 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.br.amber.logins.CustomButtonLogin
-import com.br.amber.logins.CustomTextViewLogin
+import com.br.amber.logins.customs.CustomButtonLogin
+import com.br.amber.logins.customs.CustomTextViewLogin
 import com.br.amber.logins.R
 import com.br.amber.logins.activities.CreateOrEditLoginActivity
 import com.br.amber.logins.services.LoginService

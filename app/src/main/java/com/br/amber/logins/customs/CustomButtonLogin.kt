@@ -1,9 +1,9 @@
-package com.br.amber.logins
+package com.br.amber.logins.customs
 
 import android.content.Context
 import android.util.AttributeSet
 
-class CustomTextViewLogin : androidx.appcompat.widget.AppCompatTextView {
+class CustomButtonLogin : androidx.appcompat.widget.AppCompatButton {
 
     constructor(context: Context) : super(context) {
         // Inicialização de construtor

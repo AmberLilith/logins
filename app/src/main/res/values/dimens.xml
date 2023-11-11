@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--CONFIGURAÇÕES PARA EDIT_TEXT-->
+    <dimen name="editTextHeight">48dp</dimen>
+    <dimen name="editTextMarginStart">16dp</dimen>
+    <dimen name="editTextMarginTop">16dp</dimen>
+    <dimen name="editTextMarginEnd">16dp</dimen>
+    <dimen name="editTextMarginBottom">16dp</dimen>
+    <dimen name="editTextPaddingStart">16dp</dimen>
+    <dimen name="editTextPaddingTop">16dp</dimen>
+    <dimen name="editTextPaddingEnd">16dp</dimen>
+    <dimen name="editTextPaddingBottom">16dp</dimen>
+
+    <!--CONFIGURAÇÕES PARA TEXT_VIEW-->
+
+
+    <!--CONFIGURAÇÕES PARA TEXT_VIEW PARA TITULO-->
+    <dimen name="textViewTitleTextSize">25sp</dimen>
+
+
+    <!--CONFIGURAÇÕES PARA BUTTON-->
+    <dimen name="buttonHeight">50dp</dimen>
+
+    <!--CONFIGURAÇÕES PARA BUTTON ICONE-->
+    <dimen name="buttonIconWidth">30dp</dimen>
+    <dimen name="buttonIconHeight">30dp</dimen>
+
+    <!--CONFIGURAÇÕES PARA RADIO BUTTON-->
+
+
+</resources>

@@ -6,4 +6,52 @@
     </style>
 
     <style name="Theme.Logins" parent="Base.Theme.Logins" />
+
+    <style name="TEXT_VIEW_DEFAULT">
+        <item name="android:textColor">@color/textViewTextColorLight</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TEXT_VIEW_TITLE">
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="BUTTON_DEFAULT">
+        <item name="android:background">@color/buttonDefaultBackgroundLight</item>
+        <item name="android:textColor">@color/buttonDefaultTextLight</item>
+    </style>
+
+    <style name="BUTTON_DELETE">
+        <item name="android:background">@color/buttonDefaultBackgroundLight</item>
+        <item name="android:textColor">@color/buttonDeleteTextLight</item>
+    </style>
+
+    <style name="RADIO_BUTTON">
+        <item name="android:textColor">@color/radioButtonTextColorLight</item>
+        <item name="android:background">@drawable/radio_button_rounded_light</item>
+    </style>
+
+    <style name="TOOLBAR">
+        <item name="android:background">@color/toolBarBackgroundLight</item>
+    </style>
+
+    <style name="MAIN_CONTAINER">
+        <item name="android:background">@color/mainContainerBackgroundLight</item>
+    </style>
+
+    <style name="SECONDARY_CONTAINER">
+        <item name="android:background">@color/secondaryContainerBackgroundLight</item>
+    </style>
+
+    <style name="LOGIN_LIST_ITEM">
+        <item name="android:backgroundTint">#BAA1E6</item>
+
+    </style>
+
+    <style name="EDIT_TEXT">
+        <item name="android:layout_height">48dp</item>
+        <item name="android:textColor">@color/textViewTextColorLight</item>
+        <item name="hintTextColor">@color/editTextHintColorLight</item>
+    </style>
 </resources>

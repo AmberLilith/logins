@@ -9,13 +9,13 @@ import android.os.Bundle
 import android.text.InputType
 import android.net.Uri
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.br.amber.logins.AuthenticationActivity
-import com.br.amber.logins.DialogGeneratePassword
+import com.br.amber.logins.dialogs.DialogGeneratePassword
 import com.br.amber.logins.R
 import com.br.amber.logins.models.User
 import com.google.firebase.auth.FirebaseAuth
@@ -26,7 +26,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.Picasso
 
-class RegisterEmailAndPasswordActivity : AppCompatActivity() {
+class RegisterUserActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var editTextEmail: EditText
@@ -128,12 +128,23 @@ class RegisterEmailAndPasswordActivity : AppCompatActivity() {
             intent.action = Intent.ACTION_GET_CONTENT
             startActivityForResult(intent, 1)
         }
+
+        imageViewPicture.setOnClickListener {
+            // Abre a galeria de imagens
+            val intent = Intent()
+            intent.type = "image/*"
+            intent.action = Intent.ACTION_GET_CONTENT
+            startActivityForResult(intent, 1)
+        }
         }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == 1 && resultCode == RESULT_OK) {imageUri = data?.data ?: return
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            imageUri = data?.data ?: return
             Picasso.get().load(imageUri).into(imageViewPicture)
+            buttonUploadPicture.visibility = View.GONE
+            imageViewPicture.visibility = View.VISIBLE
         }
     }
 
@@ -155,8 +166,6 @@ class RegisterEmailAndPasswordActivity : AppCompatActivity() {
             }
         }
     }
-
-
 
 
     private fun updateUI(user: FirebaseUser?) {
@@ -213,12 +222,12 @@ class RegisterEmailAndPasswordActivity : AppCompatActivity() {
         return true
     }
 
-    fun isEmailValid(email: String): Boolean {
+    private fun isEmailValid(email: String): Boolean {
         val emailRegex = "^[A-Za-z](.*)([@]{1})(.{1,})(\\.)(.{1,})"
         return email.matches(emailRegex.toRegex())
     }
 
-    fun showDialogPasswordOPtions() {
+    private fun showDialogPasswordOPtions() {
         val dialogGeneratePassword = DialogGeneratePassword()
         dialogGeneratePassword.show(supportFragmentManager, "DialogPassword")
         dialogGeneratePassword.showDialogPasswordOptions(editTextPassword, editTextRepeatPassword)

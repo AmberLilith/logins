@@ -1,126 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
-    tools:context=".AuthenticationActivity"
-    tools:layout_editor_absoluteX="-1dp"
-    tools:layout_editor_absoluteY="84dp">
+    style="@style/MAIN_CONTAINER">
 
-
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/authenticationToolbar"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#5E5C5C"
-        android:minHeight="?attr/actionBarSize"
-        android:textAlignment="center"
-        android:theme="?attr/actionBarTheme"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/authenticationTextViewTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/authenticationTextViewTitleText"
-        android:textColor="#FAF9F9"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@+id/authenticationToolbar"
-        app:layout_constraintEnd_toEndOf="@+id/authenticationToolbar"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/authenticationToolbar" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="16dp"
         android:padding="16dp"
-        android:background="@color/gray"
-        app:layout_constraintTop_toBottomOf="@+id/authenticationToolbar"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="150dp">
+        tools:context=".activities.AuthenticationActivity"
+        tools:layout_editor_absoluteX="-1dp"
+        tools:layout_editor_absoluteY="84dp"
+        style="@style/MAIN_CONTAINER">
 
-        <TextView
-            android:id="@+id/authenticationTextViewEmail"
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/authenticationToolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/authenticationTextViewEmailText" />
-
-        <EditText
-            android:id="@+id/authenticationEditTextEmail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:text="teste@gmail.com"
-            android:hint="@string/authenticationEditTextEmailHint"
-            android:inputType="textEmailAddress"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="80dp" />
-
-        <TextView
-            android:id="@+id/authenticationTextViewPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/authenticationTextViewPasswordText" />
-
-        <EditText
-            android:id="@+id/authenticationEditTextPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="teste123"
-            android:ems="10"
-            android:hint="@string/authenticationEditTextPasswordHint"
-            android:inputType="textPassword"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/authenticationEditTextEmail" />
-
-        <TextView
-            android:id="@+id/authenticationTextViewRegister"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:linksClickable="true"
-            android:text="@string/authenticationTextViewRegisterText"
-
+            android:minHeight="?attr/actionBarSize"
             android:textAlignment="center"
-            android:textColorLink="#2196F3"
+            android:theme="?attr/actionBarTheme"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/authenticationEditTextPassword" />
+            app:layout_constraintTop_toTopOf="parent"
+            style="@style/TOOLBAR"/>
 
-        <TextView
-            android:id="@+id/authenticationTextViewForgottenPassword"
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/authenticationTextViewTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/authenticationTextViewTitleText"
+            android:textColor="@color/textViewTitleTextColorDark"
+            android:textSize="@dimen/textViewTitleTextSize"
+            app:layout_constraintBottom_toBottomOf="@+id/authenticationToolbar"
+            app:layout_constraintEnd_toEndOf="@+id/authenticationToolbar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/authenticationToolbar"
+            style="@style/TEXT_VIEW_TITLE"/>
+
+        <LinearLayout
+            style="@style/SECONDARY_CONTAINER"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:linksClickable="true"
-            android:text="@string/authenticationTextViewForgottenPasswordText"
-            android:textAlignment="center"
-            android:layout_marginBottom="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/authenticationTextViewRegister" />
+            android:layout_marginTop="192dp"
+            android:orientation="vertical"
+            android:padding="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/authenticationToolbar"
+            app:layout_constraintVertical_bias="0.034"
+            tools:layout_editor_absoluteX="29dp">
 
-        <Button
-            android:id="@+id/authenticationButtonAuthenticate"
-            style="@style/Widget.AppCompat.Button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/authenticationButtonAuthenticateText"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.514"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/authenticationTextViewRegisterForgottenPassword" />
-    </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/authenticationTextViewEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/authenticationTextViewEmailText"
+                style="@style/TEXT_VIEW_DEFAULT"/>
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/authenticationEditTextEmail"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/editTextHeight"
+                android:paddingStart="@dimen/editTextPaddingStart"
+                android:paddingEnd="@dimen/editTextPaddingEnd"
+                android:ems="10"
+                android:hint="@string/authenticationEditTextEmailHint"
+                android:inputType="textEmailAddress"
+                android:text="teste@gmail.com"
+                android:textColorHint="@color/editTextHintColorDark"
+                style="@style/EDIT_TEXT"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/authenticationTextViewPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/authenticationTextViewPasswordText"
+                style="@style/TEXT_VIEW_DEFAULT"/>
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/authenticationEditTextPassword"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/editTextHeight"
+                android:paddingStart="@dimen/editTextPaddingStart"
+                android:paddingEnd="@dimen/editTextPaddingEnd"
+                android:ems="10"
+                android:hint="@string/authenticationEditTextPasswordHint"
+                android:inputType="textPassword"
+                android:text="teste123"
+                style="@style/EDIT_TEXT"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/authenticationTextViewRegister"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:linksClickable="true"
+                android:text="@string/authenticationTextViewRegisterText"
+                android:textAlignment="center"
+                style="@style/TEXT_VIEW_DEFAULT" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/authenticationTextViewForgottenPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:linksClickable="true"
+                android:text="@string/authenticationTextViewForgottenPasswordText"
+                android:textAlignment="center"
+                style="@style/TEXT_VIEW_DEFAULT" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/authenticationButtonAuthenticate"
+                style="@style/BUTTON_DEFAULT"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/authenticationButtonAuthenticateText" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>
