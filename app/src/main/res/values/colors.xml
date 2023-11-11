@@ -1,9 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <color name="black">#FF000000</color>
     <color name="gray">#D1CDCD</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="buttonDefault">#FFFFFFFF</color>
-    <color name="buttonDelete">#FFFFFFFF</color>
-    <color name="toolBar">#FFFFFFFF</color>
+
+
+    <!--Light theme-->
+    <color name="mainContainerBackgroundLight">#FFFFFF</color>
+    <color name="secondaryContainerBackgroundLight">#BAA1E6</color>
+    <color name="buttonDefaultBackgroundLight">#214EF3</color>
+    <color name="buttonDefaultTextLight">#FFFFFF</color>
+    <color name="buttonDeleteTextLight">#710808</color>
+    <color name="textViewTextColorLight">#030303</color>
+    <color name="radioButtonBackgroundLight">#9771DC</color>
+    <color name="radioButtonTextColorLight">#030303</color>
+    <color name="textViewTitleTextColorLight">#030303</color>
+    <color name="editTextHintColorLight">#807C7C</color>
+    <color name="toolBarBackgroundLight">#061C87</color>
+    <color name="spinnerTextColorLight">#030303</color>
+
+
+
+
+
+
+
+    <!--Black theme-->
+    <color name="mainContainerBackgroundDark">#000000</color>
+    <color name="secondaryContainerBackgroundDark">#1F1D1D</color>
+    <color name="buttonDefaultBackgroundDark">#000000</color>
+    <color name="buttonDefaultTextDark">#C39409</color>
+    <color name="buttonDeleteTextDark">#6C0101</color>
+    <color name="textViewTextColorDark">#FFFFFFFF</color>
+    <color name="radioButtonTextColorDark">#FFFFFFFF</color>
+    <color name="radioButtonBackgroundDark">#4A4444</color>
+    <color name="textViewTitleTextColorDark">#FFFFFFFF</color>
+    <color name="editTextHintColorDark">#807C7C</color>
+    <color name="toolBarBackgroundDark">#4A4444</color>
+    <color name="spinnerTextColorDark">#FFFFFFFF</color>
 </resources>

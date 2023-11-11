@@ -19,7 +19,7 @@
     <string name="createOrEditLoginTextViewPlatformNameText">Nome da plataforma/site</string>
     <string name="createOrEditLoginEditTextPlatformNameHint">Nome da plataforma/site</string>
     <string name="textViewUserText">Nome usuario:</string>
-    <string name="createOrEditLoginTextViewGeneratePasswordText">Digite senha:</string>
+    <string name="createOrEditLoginTextViewGeneratePasswordText">Gerar senha:</string>
     <string name="createOrEditLoginEditTextPasswordHint">Digite a senha:</string>
     <string name="createOrEditLoginEditTextUserHint">Nome usuário</string>
     <string name="createOrEditLoginButtonCancelText">Cancelar</string>

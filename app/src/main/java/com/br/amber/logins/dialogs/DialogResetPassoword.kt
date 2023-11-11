@@ -1,4 +1,4 @@
-package com.br.amber.logins
+package com.br.amber.logins.dialogs
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
+import com.br.amber.logins.R
 import com.br.amber.logins.utils.GeneralUse
 import com.google.firebase.auth.FirebaseAuth
 
@@ -25,7 +26,7 @@ class DialogResetPassoword: DialogFragment() {
     ): View? {
         val view = inflater.inflate(R.layout.dialog_reset_password, container, false)
         auth = FirebaseAuth.getInstance()
-        editTextEmail = view.findViewById(R.id.modalResetPasswordEditTextEmail)
+        editTextEmail = view.findViewById(R.id.dialogResetPasswordEditTextEmail)
         buttonCancel = view.findViewById(R.id.modalResetPasswordButtonCancel)
         buttonSend = view.findViewById(R.id.dialogGeneratePasswordButtonResetPassword)
 

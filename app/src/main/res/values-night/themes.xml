@@ -4,4 +4,50 @@
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
     </style>
+
+    <style name="TEXT_VIEW_DEFAULT">
+        <item name="android:textColor">@color/textViewTextColorDark</item>
+    </style>
+
+    <style name="TEXT_VIEW_TITLE">
+        <item name="android:textColor">@color/textViewTextColorDark</item>
+        <item name="android:layout_gravity">center</item>
+    </style>
+
+    <style name="BUTTON_DEFAULT">
+        <item name="android:background">@color/buttonDefaultBackgroundDark</item>
+        <item name="android:textColor">@color/buttonDefaultTextDark</item>
+    </style>
+
+    <style name="BUTTON_DELETE">
+        <item name="android:background">@color/buttonDefaultBackgroundDark</item>
+        <item name="android:textColor">@color/buttonDeleteTextDark</item>
+    </style>
+
+    <style name="RADIO_BUTTON">
+        <item name="android:textColor">@color/radioButtonTextColorDark</item>
+        <item name="android:background">@drawable/radio_button_rounded_dark</item>
+    </style>
+
+    <style name="TOOLBAR">
+        <item name="android:background">@color/toolBarBackgroundDark</item>
+    </style>
+
+    <style name="MAIN_CONTAINER">
+        <item name="android:background">@color/mainContainerBackgroundDark</item>
+    </style>
+
+    <style name="SECONDARY_CONTAINER">
+        <item name="android:background">@color/secondaryContainerBackgroundDark</item>
+    </style>
+
+    <style name="LOGIN_LIST_ITEM">
+        <item name="android:backgroundTint">@color/secondaryContainerBackgroundDark</item>
+
+    </style>
+
+    <style name="EDIT_TEXT">
+        <item name="android:textColor">@color/textViewTextColorDark</item>
+        <item name="hintTextColor">@color/editTextHintColorDark</item>
+    </style>
 </resources>

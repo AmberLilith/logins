@@ -5,16 +5,11 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.MenuItem
-import android.view.View
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
-import com.br.amber.logins.AuthenticationActivity
 import com.br.amber.logins.models.Login
-import com.br.amber.logins.models.User
 import com.br.amber.logins.recycleviews.ListLoginsAdapter
 import com.br.amber.logins.services.UserService
 import com.google.android.material.floatingactionbutton.FloatingActionButton

@@ -12,7 +12,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.br.amber.logins.DialogGeneratePassword
+import com.br.amber.logins.dialogs.DialogGeneratePassword
 import com.br.amber.logins.R
 import com.br.amber.logins.models.Login
 import com.br.amber.logins.services.LoginService
