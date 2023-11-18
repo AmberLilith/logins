@@ -153,19 +153,10 @@ class DialogGeneratePassword : DialogFragment() {
 
         val listOfCharacters = mutableListOf<String>()
 
-        /*Ids do RadioButtons:
-        * Alfanumérico com caractere especial: 2131231296
-        * Alfanumérico apenas: 2131231295
-        * Somente números: 2131231298
-        * Somente letras: 2131231308*/
 
         when (selectedRadioButtonOption) {
 
             1 -> {
-                listOfCharacters.add(lowCaseLetters[Random.nextInt(lowCaseLetters.size)])
-                listOfCharacters.add(upCaseLetters[Random.nextInt(upCaseLetters.size)])
-                listOfCharacters.add(specialCharacters[Random.nextInt(specialCharacters.size)])
-                listOfCharacters.add(numbers[Random.nextInt(numbers.size)].toString())
                 repeat(passwordMaxLength) {
                     val randomCharacters = when (Random.nextInt(4)) {
                         0 -> lowCaseLetters[Random.nextInt(lowCaseLetters.size)]
