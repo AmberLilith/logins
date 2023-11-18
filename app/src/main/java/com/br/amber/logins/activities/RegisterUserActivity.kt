@@ -13,6 +13,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.br.amber.logins.dialogs.DialogGeneratePassword
@@ -43,6 +44,7 @@ class RegisterUserActivity : AppCompatActivity() {
     private lateinit var buttonCopyPassword: Button
     private lateinit var buttonUploadPicture: Button
     private lateinit var imageViewPicture: ImageView
+    private lateinit var progressBar: ProgressBar
     private var imageUri: Uri? = null
     private var loggedUser: FirebaseUser? = null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,9 +62,11 @@ class RegisterUserActivity : AppCompatActivity() {
         buttonCopyPassword = findViewById(R.id.registerEmailPasswordButtonCopyPassword)
         buttonUploadPicture = findViewById(R.id.registerUserButtonUploadPicture)
         imageViewPicture = findViewById(R.id.registerUserImageViewPicture)
+        progressBar = findViewById(R.id.registerUserProgressBar)
         auth = Firebase.auth
 
         buttonRegister.setOnClickListener {
+            progressBar.visibility = View.VISIBLE
             if (validateIfFieldsAreValids()) {
                 auth.createUserWithEmailAndPassword(
                     editTextEmail.text.toString(),
@@ -79,8 +83,10 @@ class RegisterUserActivity : AppCompatActivity() {
                             data["user"] = User(userName, GeneralUse.getRandomHash(),Random.nextInt(10))
                             data["logins"] = mutableMapOf(Pair("doNotDelete", Login("Não exlcuir esse registro!!!","Não exlcuir esse registro!!!","Não exlcuir esse registro!!!")))
                             database.reference.child(userId).setValue(data)
-                            salvePictureInCloudStorage()
-                            updateUI(loggedUser)
+                            salvePictureInCloudStorage{
+                                updateUI(loggedUser)
+                            }
+
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.exception)
@@ -152,7 +158,7 @@ class RegisterUserActivity : AppCompatActivity() {
         }
     }
 
-    private fun salvePictureInCloudStorage() {
+    private fun salvePictureInCloudStorage(onSuccess: () -> Unit) {
         if(loggedUser != null){
             if(imageUri != null){
                 val storage = FirebaseStorage.getInstance()
@@ -163,10 +169,13 @@ class RegisterUserActivity : AppCompatActivity() {
                 imageRef.putFile(imageUri!!)
                     .addOnSuccessListener {
                         Log.d(this.javaClass.simpleName, "Imagem salva no Cloud Storage")
+                        onSuccess()
                     }
                     .addOnFailureListener {
                         Log.d(this.javaClass.simpleName, "Imagem não salva no Cloud Storage. Erro: ${it.message}")
                     }
+            }else{
+                onSuccess()
             }
         }
     }
@@ -183,6 +192,7 @@ class RegisterUserActivity : AppCompatActivity() {
             val errorMessage = "Falha no registro."
             Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
         }
+        progressBar.visibility = View.GONE
     }
 
     public override fun onStart() {

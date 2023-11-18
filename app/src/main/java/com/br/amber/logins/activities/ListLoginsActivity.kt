@@ -24,6 +24,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.storage.FirebaseStorage
 
 
 class ListLoginsActivity : AppCompatActivity() {
@@ -43,6 +44,60 @@ class ListLoginsActivity : AppCompatActivity() {
         buttonNewLogin = findViewById(com.br.amber.logins.R.id.listLoginsFloatingActionButtonCreateNewLogin)
         progressBar = findViewById(com.br.amber.logins.R.id.listLoginProgressBar)
 
+        retrieveListOfLogins()
+
+
+        buttonNewLogin.setOnClickListener {
+            val intent = Intent(this, CreateOrEditLoginActivity::class.java)
+            intent.putExtra("parameters", "{\"method\":\"create\", \"loginKey\":\"\"}")
+            startActivity(intent)
+        }
+
+        loggedUserImageViewPicture.setOnClickListener { view ->
+            println(loggedUserImageViewPicture.drawable)
+            val popupMenu = PopupMenu(this, view)
+            popupMenu.menuInflater.inflate(com.br.amber.logins.R.menu.pop_up_menu, popupMenu.menu)
+
+            val menuItem = popupMenu.menu.findItem(com.br.amber.logins.R.id.popUpMenuLoggedUserName)
+            val userService = UserService()
+            userService.getUser{ retrievedUser ->
+                if(retrievedUser != null){
+                    menuItem.title = "Olá, ${userService.getFistName(retrievedUser.name)}!"
+                }
+            }
+
+
+
+            popupMenu.setOnMenuItemClickListener { item ->
+                when (item.itemId) {
+                    com.br.amber.logins.R.id.popUpMenuCriarNovoLogin -> {
+                        val intent = Intent(this, CreateOrEditLoginActivity::class.java)
+                        intent.putExtra("parameters", "{\"method\":\"create\", \"loginKey\":\"\"}")
+                        startActivity(intent)
+                        true
+                    }
+                    com.br.amber.logins.R.id.popUpMenuLogOut -> {
+                        auth.signOut()
+                        val intent = Intent(this, AuthenticationActivity::class.java)
+                        startActivity(intent)
+                        true
+                    }
+                    else -> false
+                }
+            }
+
+            popupMenu.show()
+        }
+
+    }
+
+    override fun onStart() {
+        super.onStart()
+        uploadLoggedUserPicture()
+    }
+
+
+    private fun retrieveListOfLogins(){
         val databaseReference = FirebaseDatabase.getInstance().reference
         auth = FirebaseAuth.getInstance()
         loogedUser = auth.currentUser!!
@@ -94,82 +149,26 @@ class ListLoginsActivity : AppCompatActivity() {
                     progressBar.visibility = View.GONE
                 }
             })
-
-
-        buttonNewLogin.setOnClickListener {
-            val intent = Intent(this, CreateOrEditLoginActivity::class.java)
-            intent.putExtra("parameters", "{\"method\":\"create\", \"loginKey\":\"\"}")
-            startActivity(intent)
-        }
-
-        loggedUserImageViewPicture.setOnClickListener { view ->
-            println(loggedUserImageViewPicture.drawable)
-            val popupMenu = PopupMenu(this, view)
-            popupMenu.menuInflater.inflate(com.br.amber.logins.R.menu.pop_up_menu, popupMenu.menu)
-
-            val menuItem = popupMenu.menu.findItem(com.br.amber.logins.R.id.popUpMenuLoggedUserName)
-            val userService = UserService()
-            userService.getUser{ retrievedUser ->
-                if(retrievedUser != null){
-                    menuItem.title = "Olá, ${userService.getFistName(retrievedUser.name)}!"
-                }
-            }
-
-
-
-            popupMenu.setOnMenuItemClickListener { item ->
-                when (item.itemId) {
-                    com.br.amber.logins.R.id.popUpMenuCriarNovoLogin -> {
-                        val intent = Intent(this, CreateOrEditLoginActivity::class.java)
-                        intent.putExtra("parameters", "{\"method\":\"create\", \"loginKey\":\"\"}")
-                        startActivity(intent)
-                        true
-                    }
-                    com.br.amber.logins.R.id.popUpMenuLogOut -> {
-                        auth.signOut()
-                        val intent = Intent(this, AuthenticationActivity::class.java)
-                        startActivity(intent)
-                        true
-                    }
-                    else -> false
-                }
-            }
-
-            popupMenu.show()
-        }
-
-
-        //uploadLoggedUserPicture()
-
     }
+
 
     private fun uploadLoggedUserPicture(){
-        //TODO Carregar imagem do usuário logado vinda do Cloud Storage. Nada do que eu tentei deu certo. Quando carrega a imagem, o ImageView simplesmente some da tela
+        loggedUserImageViewPicture.setImageResource(com.br.amber.logins.R.drawable.baseline_person_2_24)
+        val storage = FirebaseStorage.getInstance()
+        val imageRef = storage.reference.child("images/${loogedUser.uid}").child("${loogedUser.uid}.jpg")
 
-        val loggedUserPictureUri: Uri = Uri.parse("gs://logins-61353.appspot.com/images/${loogedUser.uid}/${loogedUser.uid}.jpg")
-
-        loggedUserImageViewPicture.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
-            override
-
-            fun
-
-                    onGlobalLayout() {
-                loggedUserImageViewPicture.viewTreeObserver.removeOnGlobalLayoutListener(this)
-                uploadLoggedUserPicture()
+        imageRef.downloadUrl
+            .addOnSuccessListener { uri ->
+                Log.i(this.javaClass.simpleName, "Imagem carregada com sucesso!")
+                Glide.with(this)
+                   .load(uri)
+                   .into(loggedUserImageViewPicture)
             }
-        })
-        loggedUserImageViewPicture.scaleType = ImageView.ScaleType.FIT_CENTER
+            .addOnFailureListener {
+                Log.e(this.javaClass.simpleName, it.message!!)
+            }
+
+
     }
-
-    /*private fun uploadLoggedUserPicture(){
-        //TODO Carregar imagem do usuário logado vinda do Cloud Storage. Nada do que eu tentei deu certo. Quando carrega a imagem, o ImageView simplesmente some da tela
-
-        val loggedUserPictureUri: Uri = Uri.parse("gs://logins-61353.appspot.com/images/${loogedUser.uid}/${loogedUser.uid}.jpg")
-        Glide.with(this)
-            .load(loggedUserPictureUri)
-            .into(loggedUserImageViewPicture)
-
-
-    }*/
 
 }
