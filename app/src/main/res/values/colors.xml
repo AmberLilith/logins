@@ -4,6 +4,7 @@
     <color name="black">#FF000000</color>
     <color name="gray">#D1CDCD</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="red">#DA1010</color>
 
 
     <!--Light theme-->
