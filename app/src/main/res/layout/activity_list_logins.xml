@@ -38,6 +38,17 @@
         app:layout_constraintVertical_bias="1.0"
         tools:listitem="@layout/login_item" />
 
+    <ProgressBar
+        android:id="@+id/listLoginProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/listLoginsRecyclerViewLogins"
+        app:layout_constraintEnd_toEndOf="@+id/listLoginsRecyclerViewLogins"
+        app:layout_constraintStart_toStartOf="@+id/listLoginsRecyclerViewLogins"
+        app:layout_constraintTop_toTopOf="@+id/activityListLoginToolbar" />
+
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/listLoginsFloatingActionButtonCreateNewLogin"
@@ -46,7 +57,7 @@
         android:layout_marginEnd="292dp"
         android:layout_marginBottom="36dp"
         android:clickable="true"
-        android:contentDescription="Cadastrar novo login"
+        android:contentDescription="@string/listLoginsFloatingActionButtonCreateNewLoginContentDescription"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@android:drawable/ic_input_add"
@@ -54,21 +65,22 @@
 
     <ImageView
         android:id="@+id/listLoginsImageViewLoggedUserPicture"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_marginStart="16dp"
         android:clickable="true"
         android:focusable="true"
         app:layout_constraintBottom_toBottomOf="@+id/activityListLoginToolbar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/activityListLoginToolbar"
-        app:srcCompat="@drawable/background_rounded" />
+        app:srcCompat="@drawable/background_rounded"
+        android:contentDescription="@string/listLoginsImageViewLoggedUserPictureContentDescription" />
 
     <TextView
         android:id="@+id/listLoginsTextViewTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Logins Cadastrados"
+        android:text="@string/listLoginsTextViewTitleText"
         android:textAlignment="center"
         android:textColor="#FDFCFC"
         android:textSize="25sp"

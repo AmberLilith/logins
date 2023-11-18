@@ -26,6 +26,17 @@
             app:layout_constraintTop_toTopOf="parent"
             style="@style/TOOLBAR"/>
 
+        <ProgressBar
+            android:id="@+id/registerUserProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
 
         <androidx.appcompat.widget.LinearLayoutCompat
             style="@style/SECONDARY_CONTAINER"
@@ -38,6 +49,8 @@
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/registerUserToolbar">
+
+
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
@@ -80,8 +93,7 @@
                 android:hint="@string/editTxtRegisterEmailHint"
                 android:inputType="textEmailAddress"
                 android:paddingStart="@dimen/editTextPaddingStart"
-                android:paddingEnd="@dimen/editTextPaddingEnd"
-                android:text="teste@gmail.com" />
+                android:paddingEnd="@dimen/editTextPaddingEnd" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/registerEmailPasswordTextViewUserName"
@@ -99,8 +111,7 @@
                 android:hint="@string/registerEmailPasswordTextTextUserNameHint"
                 android:inputType="text"
                 android:paddingStart="@dimen/editTextPaddingStart"
-                android:paddingEnd="@dimen/editTextPaddingEnd"
-                android:text="Teste" />
+                android:paddingEnd="@dimen/editTextPaddingEnd" />
 
 
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -166,8 +177,7 @@
                     android:hint="@string/createOrEditLoginEditTextPasswordHint"
                     android:inputType="textPassword"
                     android:paddingStart="@dimen/editTextPaddingStart"
-                    android:paddingEnd="@dimen/editTextPaddingEnd"
-                    android:text="teste123" />
+                    android:paddingEnd="@dimen/editTextPaddingEnd" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/registerEmailPasswordTextViewRepeatPassword"
@@ -186,8 +196,7 @@
                     android:hint="@string/createOrEditLoginEditTextRepeatPasswordHnt"
                     android:inputType="textPassword"
                     android:paddingStart="@dimen/editTextPaddingStart"
-                    android:paddingEnd="@dimen/editTextPaddingEnd"
-                    android:text="teste123" />
+                    android:paddingEnd="@dimen/editTextPaddingEnd" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
 

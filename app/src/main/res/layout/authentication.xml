@@ -71,7 +71,6 @@
                 android:ems="10"
                 android:hint="@string/authenticationEditTextEmailHint"
                 android:inputType="textEmailAddress"
-                android:text="teste@gmail.com"
                 android:textColorHint="@color/editTextHintColorDark"
                 style="@style/EDIT_TEXT"/>
 
@@ -91,7 +90,6 @@
                 android:ems="10"
                 android:hint="@string/authenticationEditTextPasswordHint"
                 android:inputType="textPassword"
-                android:text="teste123"
                 style="@style/EDIT_TEXT"/>
 
             <androidx.appcompat.widget.AppCompatTextView

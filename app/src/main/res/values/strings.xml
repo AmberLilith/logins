@@ -51,6 +51,9 @@
     <string name="modalResetPasswordTextViewResetPasswordText">Digite seu email abaixo e clique em ENVIAR para receber uma mensagem de recuperação de senha.</string>
     <string name="modalResetPasswordTextViewTitleText">Recuperar senha esquecida</string>
     <string name="registerUserImageViewPictureContentDescription">Imagem carregada</string>
+    <string name="listLoginsImageViewLoggedUserPictureContentDescription">menu</string>
+    <string name="listLoginsTextViewTitleText">Logins Cadastrados</string>
+    <string name="listLoginsFloatingActionButtonCreateNewLoginContentDescription">Cadastrar novo login</string>
     <string-array name="list1to20">
         <item>1</item>
         <item>2</item>
