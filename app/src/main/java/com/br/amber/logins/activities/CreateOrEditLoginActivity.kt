@@ -75,10 +75,10 @@ class CreateOrEditLoginActivity : AppCompatActivity() {
                     if(datas != null){
                        val criptedPassword = crypt.encrypt(password, datas.secretKey, datas.aggregator)
                         if (receivedParameter.method == "create") {
-                            loginService.createLogin(Login(plataformName, user, criptedPassword), this)
+                            loginService.createLogin(Login("",plataformName, user, criptedPassword), this)
                         } else if (receivedParameter.method == "edit") {
                             loginService.editLogin(
-                                Login(plataformName, user, criptedPassword),
+                                Login("",plataformName, user, criptedPassword),
                                 this,
                                 receivedParameter.loginKey
                             )
@@ -143,7 +143,7 @@ class CreateOrEditLoginActivity : AppCompatActivity() {
                 if (login != null) {
                     userService.getUser { datas ->
                         if(datas != null){
-                           var decryptedPassword = crypt.decrypt(login.password, datas.secretKey, datas.aggregator)
+                           val decryptedPassword = crypt.decrypt(login.password, datas.secretKey, datas.aggregator)
                             platformNameEditText.text = Editable.Factory.getInstance()
                                 .newEditable(login.plataformName)
                             userEditText.text =
@@ -173,7 +173,7 @@ class CreateOrEditLoginActivity : AppCompatActivity() {
         } else if (editTextpassword.text.trim().isEmpty()) {
             editTextpassword.error = "password inválido!"
             return false
-        } else if (editTextpassword.text.trim().contains(Regex("[¬\\\\\"'\\$]"))) {
+        } else if (editTextpassword.text.trim().contains(Regex("[¬\\\\\"'\$]"))) {
             editTextpassword.error = "password não pode conter: (¬ \\ \" ' \$)"
             return false
         }else if (editTextpassword.text.trim().toString() != editTextRepeatpassword.text.trim()

@@ -3,11 +3,9 @@ package com.br.amber.logins.activities
 
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.view.ViewTreeObserver
 import android.widget.ImageView
 import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
@@ -103,7 +101,7 @@ class ListLoginsActivity : AppCompatActivity() {
         loogedUser = auth.currentUser!!
         val path = loogedUser.uid
         val plataformsNames = mutableListOf<String>()
-        val loginsIds = mutableListOf<String>()
+        var loginsIds = mutableListOf<String>()
         val context: Context = this
         progressBar.visibility = View.VISIBLE
         databaseReference.child(path).child("logins")
@@ -114,14 +112,13 @@ class ListLoginsActivity : AppCompatActivity() {
                         loginsIds.clear()
                         for (childSnapshot in dataSnapshot.children) {
                             val childData = childSnapshot.getValue(Login::class.java)
-                            loginsIds.add(childSnapshot.key.toString())
                             if (childData != null) {
                                 loginList.add(childData)
                             }
                         }
-                        // TODO ordenar a lista de plataformName em ordem alfabética sem que loginsIds fique desencontrado porque ambos tem que estar na mesma ordem
-                        val newPlataformsNames = loginList.map { it.plataformName }.toMutableList()
-                        newPlataformsNames.remove("Não exlcuir esse registro!!!")
+                        val sortedLoginList = loginList.filter { it.plataformName != "Não exlcuir esse registro!!!"}.sortedBy { it.plataformName }
+                        val newPlataformsNames = sortedLoginList.map { it.plataformName }.toMutableList()
+                        loginsIds = sortedLoginList.map { it.id }.toMutableList()
 
                         if (plataformsNames.isEmpty()) {
                             recyclerView.adapter = ListLoginsAdapter(

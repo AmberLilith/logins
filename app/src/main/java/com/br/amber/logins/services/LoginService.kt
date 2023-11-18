@@ -22,6 +22,7 @@ class LoginService {
     fun createLogin(login: Login, context: Context) {
         try {
             val newLoginNode = userNodeReference.push()
+            login.id = newLoginNode.key!!
             newLoginNode.setValue(login)
             transactionMessage = "Login cadastrado com sucesso!"
         } catch (e: Exception) {
@@ -34,6 +35,7 @@ class LoginService {
     }
 
     fun editLogin(login: Login, context: Context, loginKey: String) {
+        login.id = loginKey
         try {
             userNodeReference.child(loginKey).setValue(login)
             transactionMessage = "Alterações salvas com sucesso!"

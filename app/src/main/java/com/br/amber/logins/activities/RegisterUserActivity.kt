@@ -1,5 +1,6 @@
 package com.br.amber.logins.activities
 
+import android.app.Activity
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.ContentValues.TAG
@@ -15,6 +16,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.br.amber.logins.dialogs.DialogGeneratePassword
 import com.br.amber.logins.R
@@ -81,7 +83,7 @@ class RegisterUserActivity : AppCompatActivity() {
                             val database = Firebase.database
                             val data = mutableMapOf<String, Any>()
                             data["user"] = User(userName, GeneralUse.getRandomHash(),Random.nextInt(10))
-                            data["logins"] = mutableMapOf(Pair("doNotDelete", Login("Não exlcuir esse registro!!!","Não exlcuir esse registro!!!","Não exlcuir esse registro!!!")))
+                            data["logins"] = mutableMapOf(Pair("doNotDelete", Login("Não exlcuir esse registro!!!","Não exlcuir esse registro!!!","Não exlcuir esse registro!!!","Não exlcuir esse registro!!!")))
                             database.reference.child(userId).setValue(data)
                             salvePictureInCloudStorage{
                                 updateUI(loggedUser)
@@ -131,32 +133,30 @@ class RegisterUserActivity : AppCompatActivity() {
         }
 
         buttonUploadPicture.setOnClickListener {
-            // Abre a galeria de imagens
             val intent = Intent()
             intent.type = "image/*"
             intent.action = Intent.ACTION_GET_CONTENT
-            startActivityForResult(intent, 1)
+            getContent.launch(intent)
         }
 
         imageViewPicture.setOnClickListener {
-            // Abre a galeria de imagens
             val intent = Intent()
             intent.type = "image/*"
             intent.action = Intent.ACTION_GET_CONTENT
-            startActivityForResult(intent, 1)
+            getContent.launch(intent)
         }
         }
 
-    @Deprecated("Deprecated in Java")
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == 1 && resultCode == RESULT_OK) {
-            imageUri = data?.data ?: return
+    private val getContent = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            imageUri = result.data?.data
             Picasso.get().load(imageUri).into(imageViewPicture)
             buttonUploadPicture.visibility = View.GONE
             imageViewPicture.visibility = View.VISIBLE
         }
     }
+
+
 
     private fun salvePictureInCloudStorage(onSuccess: () -> Unit) {
         if(loggedUser != null){
@@ -208,10 +208,9 @@ class RegisterUserActivity : AppCompatActivity() {
         user?.reload()
             ?.addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    // User data has been reloaded successfully
+                    Log.i(javaClass.simpleName, "Usuário recarregado!")
                 } else {
-                    // Handle the error
-                    // task.exception can provide more details about the error
+                    Log.e(javaClass.simpleName, task.exception?.message.toString())
                 }
             }
     }
