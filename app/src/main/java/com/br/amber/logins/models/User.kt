@@ -2,12 +2,9 @@ package com.br.amber.logins.models
 
 class User(
     val name: String,
-    val photoUri: String
+    val secretKey: String,
+    val aggregator: Int
 ) {
-    constructor(): this("","")
+    constructor(): this("","", 0)
 
-    fun getFistName(): String{
-        val names = name.split(" ")
-        return names[0]
-    }
 }

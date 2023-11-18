@@ -2,7 +2,11 @@ package com.br.amber.logins.utils
 
 import android.content.Context
 import android.content.DialogInterface
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
+import java.time.LocalDateTime
+import java.util.UUID
 
 class GeneralUse {
 
@@ -30,6 +34,11 @@ class GeneralUse {
         fun isEmailValid(email: String): Boolean {
             val emailRegex = "^[A-Za-z](.*)([@]{1})(.{1,})(\\.)(.{1,})"
             return email.matches(emailRegex.toRegex())
+        }
+
+
+        fun getRandomHash():String{
+            return UUID.randomUUID().toString().replace("-","")
         }
     }
 }

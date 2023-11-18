@@ -3,15 +3,20 @@ package com.br.amber.logins.activities
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.view.ViewTreeObserver
 import android.widget.ImageView
+import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import com.br.amber.logins.models.Login
 import com.br.amber.logins.recycleviews.ListLoginsAdapter
 import com.br.amber.logins.services.UserService
+import com.bumptech.glide.Glide
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -26,6 +31,7 @@ class ListLoginsActivity : AppCompatActivity() {
     private lateinit var loggedUserImageViewPicture: ImageView
     private lateinit var  recyclerView: RecyclerView
     private lateinit var buttonNewLogin: FloatingActionButton
+    private lateinit var progressBar: ProgressBar
     private lateinit var loogedUser: FirebaseUser
     private lateinit var auth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,52 +41,57 @@ class ListLoginsActivity : AppCompatActivity() {
         loggedUserImageViewPicture = findViewById(com.br.amber.logins.R.id.listLoginsImageViewLoggedUserPicture)
         recyclerView = findViewById(com.br.amber.logins.R.id.listLoginsRecyclerViewLogins)
         buttonNewLogin = findViewById(com.br.amber.logins.R.id.listLoginsFloatingActionButtonCreateNewLogin)
+        progressBar = findViewById(com.br.amber.logins.R.id.listLoginProgressBar)
 
         val databaseReference = FirebaseDatabase.getInstance().reference
         auth = FirebaseAuth.getInstance()
         loogedUser = auth.currentUser!!
         val path = loogedUser.uid
         val plataformsNames = mutableListOf<String>()
-        val loginsKeys = mutableListOf<String>()
+        val loginsIds = mutableListOf<String>()
         val context: Context = this
-
+        progressBar.visibility = View.VISIBLE
         databaseReference.child(path).child("logins")
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     if (dataSnapshot.exists()) {
                         val loginList = mutableListOf<Login>()
-                        loginsKeys.clear()
+                        loginsIds.clear()
                         for (childSnapshot in dataSnapshot.children) {
                             val childData = childSnapshot.getValue(Login::class.java)
-                            loginsKeys.add(childSnapshot.key.toString())
+                            loginsIds.add(childSnapshot.key.toString())
                             if (childData != null) {
                                 loginList.add(childData)
                             }
                         }
-
-                        val newPlataformsNames = loginList.map { it.plataformName }
-                        val newLoginsKeys = loginsKeys
+                        // TODO ordenar a lista de plataformName em ordem alfabética sem que loginsIds fique desencontrado porque ambos tem que estar na mesma ordem
+                        val newPlataformsNames = loginList.map { it.plataformName }.toMutableList()
+                        newPlataformsNames.remove("Não exlcuir esse registro!!!")
 
                         if (plataformsNames.isEmpty()) {
                             recyclerView.adapter = ListLoginsAdapter(
                                 context,
-                                newPlataformsNames.toMutableList(),
-                                newLoginsKeys.toMutableList()
+                                newPlataformsNames,
+                                loginsIds
                             )
+                            progressBar.visibility = View.GONE
                         } else {
                             (recyclerView.adapter as ListLoginsAdapter).updateData(
                                 newPlataformsNames,
-                                newLoginsKeys
+                                loginsIds
                             )
+                            progressBar.visibility = View.GONE
                         }
                     } else {
                         (recyclerView.adapter as ListLoginsAdapter).clearData()
+                        progressBar.visibility = View.GONE
                     }
                 }
 
 
                 override fun onCancelled(databaseError: DatabaseError) {
                     Log.e(this.javaClass.name, "Erro ao recuperar dados: ${databaseError.message}")
+                    progressBar.visibility = View.GONE
                 }
             })
 
@@ -92,14 +103,15 @@ class ListLoginsActivity : AppCompatActivity() {
         }
 
         loggedUserImageViewPicture.setOnClickListener { view ->
+            println(loggedUserImageViewPicture.drawable)
             val popupMenu = PopupMenu(this, view)
             popupMenu.menuInflater.inflate(com.br.amber.logins.R.menu.pop_up_menu, popupMenu.menu)
 
             val menuItem = popupMenu.menu.findItem(com.br.amber.logins.R.id.popUpMenuLoggedUserName)
             val userService = UserService()
-            userService.getUserDatas{ retrievedUser ->
+            userService.getUser{ retrievedUser ->
                 if(retrievedUser != null){
-                    menuItem.title = "Olá, ${retrievedUser.getFistName()}!"
+                    menuItem.title = "Olá, ${userService.getFistName(retrievedUser.name)}!"
                 }
             }
 
@@ -127,45 +139,37 @@ class ListLoginsActivity : AppCompatActivity() {
         }
 
 
-        uploadLoggedUserPicture()
+        //uploadLoggedUserPicture()
 
     }
 
     private fun uploadLoggedUserPicture(){
         //TODO Carregar imagem do usuário logado vinda do Cloud Storage. Nada do que eu tentei deu certo. Quando carrega a imagem, o ImageView simplesmente some da tela
 
+        val loggedUserPictureUri: Uri = Uri.parse("gs://logins-61353.appspot.com/images/${loogedUser.uid}/${loogedUser.uid}.jpg")
 
-        loggedUserImageViewPicture.setImageResource(com.br.amber.logins.R.drawable.baseline_person_2_24)
+        loggedUserImageViewPicture.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+            override
 
-        /*val loggedUserPictureUri: Uri = Uri.parse("gs://logins-61353.appspot.com/images/ela.jpg")
+            fun
+
+                    onGlobalLayout() {
+                loggedUserImageViewPicture.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                uploadLoggedUserPicture()
+            }
+        })
+        loggedUserImageViewPicture.scaleType = ImageView.ScaleType.FIT_CENTER
+    }
+
+    /*private fun uploadLoggedUserPicture(){
+        //TODO Carregar imagem do usuário logado vinda do Cloud Storage. Nada do que eu tentei deu certo. Quando carrega a imagem, o ImageView simplesmente some da tela
+
+        val loggedUserPictureUri: Uri = Uri.parse("gs://logins-61353.appspot.com/images/${loogedUser.uid}/${loogedUser.uid}.jpg")
         Glide.with(this)
             .load(loggedUserPictureUri)
-            .into(loggedUserImageViewPicture)*/
+            .into(loggedUserImageViewPicture)
 
 
-
-
-    /*val imagePath = loggedUserPictureUri.lastPathSegment?.take(100) ?: ""
-    val storage = FirebaseStorage.getInstance()
-    val imageRef = storage.reference.child("images").child("${loogedUser.uid}.jpg")
-
-    // Faz o download da imagem para o dispositivo
-    imageRef.downloadUrl
-        .addOnSuccessListener { uri ->
-            // A imagem foi baixada com sucesso
-
-            // Exibe a imagem no ImageView
-            loggedUserImageViewPicture.setImageURI(uri)
-        }
-        .addOnFailureListener {
-            Log.e(this.javaClass.simpleName, it.message!!)
-        }
-
-            imagemGlide.with(this)
-                .load(loggedUserPictureUri)
-                .into(loggedUserImageViewPicture)*/
-
-
-    }
+    }*/
 
 }

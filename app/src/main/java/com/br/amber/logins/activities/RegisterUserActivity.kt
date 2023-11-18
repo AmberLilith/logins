@@ -17,7 +17,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.br.amber.logins.dialogs.DialogGeneratePassword
 import com.br.amber.logins.R
+import com.br.amber.logins.models.Login
 import com.br.amber.logins.models.User
+import com.br.amber.logins.utils.GeneralUse
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
@@ -25,6 +27,7 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.Picasso
+import kotlin.random.Random
 
 class RegisterUserActivity : AppCompatActivity() {
 
@@ -73,8 +76,8 @@ class RegisterUserActivity : AppCompatActivity() {
                             val userName = editTextUserName.text.toString()
                             val database = Firebase.database
                             val data = mutableMapOf<String, Any>()
-                            data["datas"] = User(userName, "")
-                            data["logins"] = ""
+                            data["user"] = User(userName, GeneralUse.getRandomHash(),Random.nextInt(10))
+                            data["logins"] = mutableMapOf(Pair("doNotDelete", Login("Não exlcuir esse registro!!!","Não exlcuir esse registro!!!","Não exlcuir esse registro!!!")))
                             database.reference.child(userId).setValue(data)
                             salvePictureInCloudStorage()
                             updateUI(loggedUser)
@@ -138,6 +141,7 @@ class RegisterUserActivity : AppCompatActivity() {
         }
         }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 1 && resultCode == RESULT_OK) {
@@ -202,7 +206,7 @@ class RegisterUserActivity : AppCompatActivity() {
             }
     }
 
-    fun validateIfFieldsAreValids(): Boolean {
+    private fun validateIfFieldsAreValids(): Boolean {
         if (editTextEmail.text.trim().isEmpty()) {
             editTextEmail.error = "Email vazio!"
             return false

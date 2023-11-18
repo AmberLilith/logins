@@ -5,8 +5,6 @@ class Login(
     val user: String,
     val password: String
 ) {
-    constructor() : this("", "", "") {
-
-    }
+    constructor() : this("", "", "")
 
 }

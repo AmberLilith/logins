@@ -14,9 +14,9 @@ class UserService {
     private val currentUser = firebaseAuth.currentUser
     private val userId = currentUser!!.uid
     private val database = FirebaseDatabase.getInstance()
-    private val userNodeReference = database.getReference(userId).child("datas")
+    private val userNodeReference = database.getReference(userId).child("user")
 
-    fun getUserDatas(callback: (User?) -> Unit){
+    fun getUser(callback: (User?) -> Unit){
         try {
             userNodeReference.addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -38,4 +38,35 @@ class UserService {
             Log.e(this.javaClass.simpleName,"Não foi possível recuperar o login! Erro: ${e.message}")
         }
     }
+
+    fun getSecretKey(callback: (String?) -> Unit){
+        try {
+            userNodeReference.child("secretKey")
+                .addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            val secretKey = dataSnapshot.getValue(String::class.java)
+                            callback(secretKey)
+                        } else {
+                            Log.d(this.javaClass.simpleName,"Registro não existe")
+                            callback(null)
+                        }
+                    }
+
+                    override fun onCancelled(databaseError: DatabaseError) {
+                        Log.e(this.javaClass.simpleName,"Erro ao recuperar dados: ${databaseError.message}")
+                        callback(null)
+                    }
+                })
+        } catch (e: Exception) {
+            Log.e(this.javaClass.simpleName,"Não foi possível recuperar o login! Erro: ${e.message}")
+        }
+    }
+
+    fun getFistName(wholeName:String): String{
+        val names = wholeName.split(" ")
+        return names[0]
+    }
+
+
 }

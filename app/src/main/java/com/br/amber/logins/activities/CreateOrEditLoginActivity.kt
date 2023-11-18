@@ -8,14 +8,18 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.InputType
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.br.amber.logins.dialogs.DialogGeneratePassword
 import com.br.amber.logins.R
 import com.br.amber.logins.models.Login
 import com.br.amber.logins.services.LoginService
+import com.br.amber.logins.services.UserService
+import com.br.amber.logins.utils.Crypt
 import com.google.gson.Gson
 
 class CreateOrEditLoginActivity : AppCompatActivity() {
@@ -30,8 +34,12 @@ class CreateOrEditLoginActivity : AppCompatActivity() {
     private lateinit var buttonViewPassword: Button
     private lateinit var buttonSave: Button
     private lateinit var buttonCancel: Button
+    private lateinit var progressBar: ProgressBar
     private lateinit var receivedParameter: Parameters
     private val loginService = LoginService()
+    private val userService = UserService()
+    private lateinit var secretKey: String
+    private lateinit var crypt: Crypt
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,24 +55,40 @@ class CreateOrEditLoginActivity : AppCompatActivity() {
         titleTextView = findViewById(R.id.createOrEditLoginTitle)
         buttonSave = findViewById(R.id.createOrEditLoginButtonSave)
         buttonCancel = findViewById(R.id.createOrEditLoginButtonCancel)
+        progressBar = findViewById(R.id.createOrEditLoginProgressBar)
+        crypt = Crypt()
 
-        setActivityAccordingMethod()
+        userService.getSecretKey { retrievedSecretKey ->
+             secretKey = retrievedSecretKey!!
+            setActivityAccordingMethod()
+        }
+
+
 
         buttonSave.setOnClickListener {
             if (validateIfFieldsAreValids()) {
+                progressBar.visibility = View.VISIBLE
                 val plataformName = platformNameEditText.text.trim().toString()
                 val user = userEditText.text.trim().toString()
                 val password = editTextpassword.text.trim().toString()
-                if (receivedParameter.method == "create") {
-                    loginService.createLogin(Login(plataformName, user, password), this)
-                } else if (receivedParameter.method == "edit") {
-                    loginService.editLogin(
-                        Login(plataformName, user, password),
-                        this,
-                        receivedParameter.loginKey
-                    )
+                userService.getUser { datas ->
+                    if(datas != null){
+                       val criptedPassword = crypt.encrypt(password, datas.secretKey, datas.aggregator)
+                        if (receivedParameter.method == "create") {
+                            loginService.createLogin(Login(plataformName, user, criptedPassword), this)
+                        } else if (receivedParameter.method == "edit") {
+                            loginService.editLogin(
+                                Login(plataformName, user, criptedPassword),
+                                this,
+                                receivedParameter.loginKey
+                            )
+                        }
+                    }
+                    progressBar.visibility = View.GONE
+                    returnToListLoginsActivity()
                 }
-                returnToListLoginsActivity()
+
+
             }
         }
 
@@ -96,6 +120,8 @@ class CreateOrEditLoginActivity : AppCompatActivity() {
             }
             invisiblePassword = !invisiblePassword
         }
+
+
     }
 
     private fun returnToListLoginsActivity() {
@@ -112,16 +138,24 @@ class CreateOrEditLoginActivity : AppCompatActivity() {
         if (receivedParameter.method == "edit") {
             titleTextView.text = "Editar dados do login"
             val loginKey = receivedParameter.loginKey
+            progressBar.visibility = View.VISIBLE
             loginService.getLoginForEdition(loginKey) { login ->
                 if (login != null) {
-                    platformNameEditText.text = Editable.Factory.getInstance()
-                        .newEditable(login.plataformName)
-                    userEditText.text =
-                        Editable.Factory.getInstance().newEditable(login.user)
-                    editTextpassword.text =
-                        Editable.Factory.getInstance().newEditable(login.password)
-                    editTextRepeatpassword.text =
-                        Editable.Factory.getInstance().newEditable(login.password)
+                    userService.getUser { datas ->
+                        if(datas != null){
+                           var decryptedPassword = crypt.decrypt(login.password, datas.secretKey, datas.aggregator)
+                            platformNameEditText.text = Editable.Factory.getInstance()
+                                .newEditable(login.plataformName)
+                            userEditText.text =
+                                Editable.Factory.getInstance().newEditable(login.user)
+                            editTextpassword.text =
+                                Editable.Factory.getInstance().newEditable(decryptedPassword)
+                            editTextRepeatpassword.text =
+                                Editable.Factory.getInstance().newEditable(decryptedPassword)
+                        }
+                        progressBar.visibility = View.GONE
+                    }
+
                 }
             }
         } else {
@@ -139,7 +173,10 @@ class CreateOrEditLoginActivity : AppCompatActivity() {
         } else if (editTextpassword.text.trim().isEmpty()) {
             editTextpassword.error = "password inválido!"
             return false
-        } else if (editTextpassword.text.trim().toString() != editTextRepeatpassword.text.trim()
+        } else if (editTextpassword.text.trim().contains(Regex("[¬\\\\\"'\\$]"))) {
+            editTextpassword.error = "password não pode conter: (¬ \\ \" ' \$)"
+            return false
+        }else if (editTextpassword.text.trim().toString() != editTextRepeatpassword.text.trim()
                 .toString()
         ) {
             editTextpassword.error = "As senhas não conferem!"
