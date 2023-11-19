@@ -8,6 +8,7 @@
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
+    android:padding="16dp"
     style="@style/MAIN_CONTAINER">
 
     <androidx.appcompat.widget.Toolbar
