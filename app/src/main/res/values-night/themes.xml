@@ -24,25 +24,29 @@
         <item name="android:textColor">@color/buttonDeleteTextDark</item>
     </style>
 
+    <style name="BUTTON_ICON">
+        <item name="android:backgroundTint">@color/buttonDefaultTextDark</item>
+    </style>
+
     <style name="RADIO_BUTTON">
         <item name="android:textColor">@color/radioButtonTextColorDark</item>
         <item name="android:background">@drawable/radio_button_rounded_dark</item>
     </style>
 
     <style name="TOOLBAR">
-        <item name="android:background">@color/toolBarBackgroundDark</item>
+        <item name="android:background">@color/toolBarBackgroundDarkBLue</item>
     </style>
 
     <style name="MAIN_CONTAINER">
-        <item name="android:background">@color/mainContainerBackgroundDark</item>
+        <item name="android:background">@drawable/main_background_dark</item>
     </style>
 
     <style name="SECONDARY_CONTAINER">
-        <item name="android:background">@color/secondaryContainerBackgroundDark</item>
+        <item name="android:background">@color/secondaryContainerBackgroundDarkBLue</item>
     </style>
 
     <style name="LOGIN_LIST_ITEM">
-        <item name="android:backgroundTint">@color/secondaryContainerBackgroundDark</item>
+        <item name="android:backgroundTint">@color/secondaryContainerBackgroundDarkBLue</item>
 
     </style>
 

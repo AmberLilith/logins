@@ -21,6 +21,24 @@
         app:layout_constraintTop_toTopOf="parent"
         style="@style/TOOLBAR">
 
+        <androidx.cardview.widget.CardView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            app:cardCornerRadius="80dp">
+
+            <ImageView
+                android:id="@+id/listLoginsImageViewLoggedUserPicture"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toBottomOf="@+id/activityListLoginToolbar"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/activityListLoginToolbar"
+                android:contentDescription="@string/listLoginsImageViewLoggedUserPictureContentDescription" />
+        </androidx.cardview.widget.CardView>
+
 
     </androidx.appcompat.widget.Toolbar>
 
@@ -63,18 +81,7 @@
         app:srcCompat="@android:drawable/ic_input_add"
         android:focusable="true" />
 
-    <ImageView
-        android:id="@+id/listLoginsImageViewLoggedUserPicture"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="16dp"
-        android:clickable="true"
-        android:focusable="true"
-        app:layout_constraintBottom_toBottomOf="@+id/activityListLoginToolbar"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/activityListLoginToolbar"
-        app:srcCompat="@drawable/background_rounded"
-        android:contentDescription="@string/listLoginsImageViewLoggedUserPictureContentDescription" />
+
 
     <TextView
         android:id="@+id/listLoginsTextViewTitle"
@@ -88,6 +95,8 @@
         app:layout_constraintTop_toTopOf="@+id/activityListLoginToolbar"
         tools:layout_editor_absoluteX="18dp"
         style="@style/TEXT_VIEW_TITLE"/>
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

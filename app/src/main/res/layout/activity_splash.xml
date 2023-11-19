@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activities.SplashActivity"
+    android:gravity="center"
+    android:background="@drawable/main_background_dark">
+
+    <ImageView
+        android:id="@+id/splashImageView"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@drawable/cadeado_logo"
+        android:contentDescription="@string/splashImageViewContentDescription" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="70sp"
+        android:text="@string/splashImageViewText"
+        android:textColor="#2CC1E6"/>
+
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="visible"/>
+
+</androidx.appcompat.widget.LinearLayoutCompat>
