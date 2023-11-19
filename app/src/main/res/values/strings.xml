@@ -56,6 +56,8 @@
     <string name="listLoginsFloatingActionButtonCreateNewLoginContentDescription">Cadastrar novo login</string>
     <string name="registerUserButtonUploadPictureText">Foto</string>
     <string name="registerEmailPasswordButtonCancelText">Cencelar</string>
+    <string name="splashImageViewContentDescription">Logo de cadeado com tons gradiente de azul</string>
+    <string name="splashImageViewText">Logins</string>
     <string-array name="list1to20">
         <item>1</item>
         <item>2</item>

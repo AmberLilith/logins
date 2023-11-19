@@ -28,7 +28,7 @@
     </style>
 
     <style name="BUTTON_ICON">
-        <item name="android:backgroundTint">@color/buttonDefaultTextLight</item>
+        <item name="android:backgroundTint">@color/buttonIconTintBackground</item>
     </style>
 
     <style name="RADIO_BUTTON">
@@ -45,7 +45,7 @@
     </style>
 
     <style name="SECONDARY_CONTAINER">
-        <item name="android:background">@color/secondaryContainerBackgroundLight</item>
+        <item name="android:background">#D9F3F2</item>
     </style>
 
     <style name="LOGIN_LIST_ITEM">
