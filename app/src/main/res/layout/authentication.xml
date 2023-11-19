@@ -85,12 +85,40 @@
                 android:textColorHint="@color/editTextHintColorDark"
                 style="@style/EDIT_TEXT"/>
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/authenticationTextViewPassword"
+
+
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/authenticationTextViewPasswordText"
-                style="@style/TEXT_VIEW_DEFAULT"/>
+                android:orientation="horizontal"
+                android:padding="0dp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/authenticationTextViewPassword"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/authenticationTextViewPasswordText"
+                    style="@style/TEXT_VIEW_DEFAULT"/>
+
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="end">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/authenticationButtonShowPassword"
+                        android:layout_width="@dimen/buttonIconWidth"
+                        android:layout_height="@dimen/buttonIconHeight"
+                        android:layout_gravity="center"
+                        android:background="@drawable/baseline_visibility_24"
+                        android:textColor="@color/buttonDefaultTextDark"
+                        style="@style/BUTTON_ICON"/>
+
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/authenticationEditTextPassword"

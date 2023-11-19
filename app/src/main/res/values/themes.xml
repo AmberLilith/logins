@@ -27,6 +27,10 @@
         <item name="android:textColor">@color/buttonDeleteTextLight</item>
     </style>
 
+    <style name="BUTTON_ICON">
+        <item name="android:backgroundTint">@color/buttonDefaultTextLight</item>
+    </style>
+
     <style name="RADIO_BUTTON">
         <item name="android:textColor">@color/radioButtonTextColorLight</item>
         <item name="android:background">@drawable/radio_button_rounded_light</item>

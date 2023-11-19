@@ -25,15 +25,16 @@ import com.google.gson.Gson
 class CreateOrEditLoginActivity : AppCompatActivity() {
 
     private lateinit var platformNameEditText: EditText
-    private lateinit var userEditText: EditText
+    private lateinit var userNameEditText: EditText
     private lateinit var editTextpassword: EditText
     private lateinit var editTextRepeatpassword: EditText
     private lateinit var titleTextView: TextView
     private lateinit var buttonCallDialogPasswordOptions: Button
     private lateinit var buttonCopyPassword: Button
-    private lateinit var buttonViewPassword: Button
+    private lateinit var buttonShowPassword: Button
     private lateinit var buttonSave: Button
     private lateinit var buttonCancel: Button
+    private lateinit var buttonCopyUserName: Button
     private lateinit var progressBar: ProgressBar
     private lateinit var receivedParameter: Parameters
     private val loginService = LoginService()
@@ -46,12 +47,13 @@ class CreateOrEditLoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_create_or_edit_login)
 
         platformNameEditText = findViewById(R.id.createOrEditLoginEditTextPlatformName)
-        userEditText = findViewById(R.id.createOrEditLoginEditTextUser)
+        userNameEditText = findViewById(R.id.createOrEditLoginEditTextUser)
         editTextpassword = findViewById(R.id.createOrEditLoginEditTextPassword)
         editTextRepeatpassword = findViewById(R.id.createOrEditLoginEditTextRepeatPassword)
         buttonCallDialogPasswordOptions = findViewById(R.id.createOrEditLoginButtonGeneratePassword)
         buttonCopyPassword = findViewById(R.id.createOrEditLoginButtonCopyPassword)
-        buttonViewPassword = findViewById(R.id.createOrEditLoginButtonViewPassword)
+        buttonShowPassword = findViewById(R.id.createOrEditLoginButtonShowPassword)
+        buttonCopyUserName = findViewById(R.id.createOrEditLoginButtonCopyUserName)
         titleTextView = findViewById(R.id.createOrEditLoginTitle)
         buttonSave = findViewById(R.id.createOrEditLoginButtonSave)
         buttonCancel = findViewById(R.id.createOrEditLoginButtonCancel)
@@ -69,7 +71,7 @@ class CreateOrEditLoginActivity : AppCompatActivity() {
             if (validateIfFieldsAreValids()) {
                 progressBar.visibility = View.VISIBLE
                 val plataformName = platformNameEditText.text.trim().toString()
-                val user = userEditText.text.trim().toString()
+                val user = userNameEditText.text.trim().toString()
                 val password = editTextpassword.text.trim().toString()
                 userService.getUser { datas ->
                     if(datas != null){
@@ -102,21 +104,27 @@ class CreateOrEditLoginActivity : AppCompatActivity() {
 
         buttonCopyPassword.setOnClickListener{
             val clipboardManager = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-            val clipData = ClipData.newPlainText("Texto Copiado", editTextpassword.text)
+            val clipData = ClipData.newPlainText("Senha copiada", editTextpassword.text)
+            clipboardManager.setPrimaryClip(clipData)
+        }
+
+        buttonCopyUserName.setOnClickListener{
+            val clipboardManager = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            val clipData = ClipData.newPlainText("Nome usuário Copiado", userNameEditText.text)
             clipboardManager.setPrimaryClip(clipData)
         }
 
         var invisiblePassword = true
 
-        buttonViewPassword.setOnClickListener{
+        buttonShowPassword.setOnClickListener{
             if(invisiblePassword){
                 editTextpassword.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_NORMAL
                 editTextRepeatpassword.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_NORMAL
-                buttonViewPassword.setBackgroundResource(R.drawable.baseline_visibility_off_24)
+                buttonShowPassword.setBackgroundResource(R.drawable.baseline_visibility_off_24)
             }else{
                 editTextpassword.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
                 editTextRepeatpassword.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
-                buttonViewPassword.setBackgroundResource(R.drawable.baseline_visibility_24)
+                buttonShowPassword.setBackgroundResource(R.drawable.baseline_visibility_24)
             }
             invisiblePassword = !invisiblePassword
         }
@@ -146,7 +154,7 @@ class CreateOrEditLoginActivity : AppCompatActivity() {
                            val decryptedPassword = crypt.decrypt(login.password, datas.secretKey, datas.aggregator)
                             platformNameEditText.text = Editable.Factory.getInstance()
                                 .newEditable(login.plataformName)
-                            userEditText.text =
+                            userNameEditText.text =
                                 Editable.Factory.getInstance().newEditable(login.user)
                             editTextpassword.text =
                                 Editable.Factory.getInstance().newEditable(decryptedPassword)
@@ -167,8 +175,8 @@ class CreateOrEditLoginActivity : AppCompatActivity() {
         if (platformNameEditText.text.trim().isEmpty()) {
             platformNameEditText.error = "Nome da plataforma inválido!"
             return false
-        } else if (userEditText.text.trim().isEmpty()) {
-            userEditText.error = "Usuário inválido!"
+        } else if (userNameEditText.text.trim().isEmpty()) {
+            userNameEditText.error = "Usuário inválido!"
             return false
         } else if (editTextpassword.text.trim().isEmpty()) {
             editTextpassword.error = "password inválido!"

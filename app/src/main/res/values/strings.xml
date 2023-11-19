@@ -54,6 +54,8 @@
     <string name="listLoginsImageViewLoggedUserPictureContentDescription">menu</string>
     <string name="listLoginsTextViewTitleText">Logins Cadastrados</string>
     <string name="listLoginsFloatingActionButtonCreateNewLoginContentDescription">Cadastrar novo login</string>
+    <string name="registerUserButtonUploadPictureText">Foto</string>
+    <string name="registerEmailPasswordButtonCancelText">Cencelar</string>
     <string-array name="list1to20">
         <item>1</item>
         <item>2</item>

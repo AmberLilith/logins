@@ -165,21 +165,23 @@
                                 android:layout_height="@dimen/buttonIconHeight"
                                 android:layout_gravity="center"
                                 android:background="@drawable/baseline_visibility_24"
-                                android:textColor="@color/buttonDefaultTextDark" />
+                                android:textColor="@color/buttonDefaultTextDark"
+                                style="@style/BUTTON_ICON"/>
 
                             <androidx.appcompat.widget.AppCompatButton
                                 android:id="@+id/registerEmailPasswordButtonCopyPassword"
-                                style="@style/BUTTON_DEFAULT"
                                 android:layout_width="@dimen/buttonIconWidth"
                                 android:layout_height="@dimen/buttonIconHeight"
                                 android:layout_gravity="center"
-                                android:background="@drawable/baseline_content_copy_24" />
+                                android:background="@drawable/baseline_content_copy_24"
+                                style="@style/BUTTON_ICON" />
 
                             <androidx.appcompat.widget.AppCompatButton
                                 android:id="@+id/registerEmailPasswordButtonGeneratePassword"
                                 android:layout_width="@dimen/buttonIconWidth"
                                 android:layout_height="@dimen/buttonIconHeight"
-                                android:background="@drawable/baseline_settings_24" />
+                                android:background="@drawable/baseline_settings_24"
+                                style="@style/BUTTON_ICON" />
 
 
                         </androidx.appcompat.widget.LinearLayoutCompat>
