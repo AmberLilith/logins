@@ -7,6 +7,17 @@
     android:padding="16dp"
     style="@style/MAIN_CONTAINER">
 
+    <ProgressBar
+        android:id="@+id/registerUserProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/registerUserToolbar"
         android:layout_width="match_parent"
@@ -52,16 +63,6 @@
             android:orientation="vertical">
 
 
-            <ProgressBar
-                android:id="@+id/registerUserProgressBar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
 
 
             <androidx.appcompat.widget.LinearLayoutCompat

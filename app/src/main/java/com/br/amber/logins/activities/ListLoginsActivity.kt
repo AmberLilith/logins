@@ -150,20 +150,23 @@ class ListLoginsActivity : AppCompatActivity() {
 
 
     private fun uploadLoggedUserPicture(){
-        loggedUserImageViewPicture.setImageResource(com.br.amber.logins.R.drawable.baseline_person_2_24)
-        val storage = FirebaseStorage.getInstance()
-        val imageRef = storage.reference.child("images/${loogedUser.uid}").child("${loogedUser.uid}.jpg")
+        if(loggedUserImageViewPicture.drawable == null){
+            loggedUserImageViewPicture.setImageResource(com.br.amber.logins.R.drawable.baseline_person_2_24)
+            val storage = FirebaseStorage.getInstance()
+            val imageRef = storage.reference.child("images/${loogedUser.uid}").child("${loogedUser.uid}.jpg")
 
-        imageRef.downloadUrl
-            .addOnSuccessListener { uri ->
-                Log.i(this.javaClass.simpleName, "Imagem carregada com sucesso!")
-                Glide.with(this)
-                   .load(uri)
-                   .into(loggedUserImageViewPicture)
-            }
-            .addOnFailureListener {
-                Log.e(this.javaClass.simpleName, it.message!!)
-            }
+            imageRef.downloadUrl
+                .addOnSuccessListener { uri ->
+                    Log.i(this.javaClass.simpleName, "Imagem carregada com sucesso!")
+                    Glide.with(this)
+                        .load(uri)
+                        .into(loggedUserImageViewPicture)
+                }
+                .addOnFailureListener {
+                    Log.e(this.javaClass.simpleName, it.message!!)
+                }
+        }
+
 
 
     }
