@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.RadioGroup
-import android.widget.Spinner
 import androidx.fragment.app.DialogFragment
 import com.br.amber.logins.R
 import com.br.amber.logins.customs.CustomRadioButton
@@ -23,7 +22,7 @@ class DialogGeneratePassword : DialogFragment() {
     private lateinit var radioButtonOnlyNumbers: CustomRadioButton
     private lateinit var radioButtonOnlyLetters: CustomRadioButton
     private lateinit var radioGroup: RadioGroup
-    private lateinit var spinnerMaxLength: Spinner
+    private lateinit var editTextPasswordLength: EditText
     private lateinit var editTextToReceiveGeneratedPassword: EditText
     private lateinit var editTextRepeatToReceiveGeneratedPassword: EditText
     private var selectedRadioButtonOption = 1
@@ -41,27 +40,29 @@ class DialogGeneratePassword : DialogFragment() {
         radioButtonOnlyNumbers = view.findViewById(R.id.dialogGeneratePasswordRadioButtonOnlyNumbers)
         radioButtonOnlyLetters = view.findViewById(R.id.dialogGeneratePasswordRadioButtonOnlyLetters)
         radioGroup = view.findViewById(R.id.dialogGeneratePasswordRadioGroupPasswordFormats)
-        spinnerMaxLength = view.findViewById(R.id.dialogGeneratePasswordSpinnerMaxLength)
+        editTextPasswordLength = view.findViewById(R.id.dialogGeneratePasswordEditTextPasswordLength)
 
         radioButtonAlphaNumSpecialCharactersUpAndLowCase.setOptionNumber(1)
         radioButtonAlphaNumOnly.setOptionNumber(2)
         radioButtonOnlyNumbers.setOptionNumber(3)
         radioButtonOnlyLetters.setOptionNumber(4)
 
-        spinnerMaxLength.setSelection(6)
-
         buttonCancel.setOnClickListener {
             dismiss()
         }
 
         buttonGeneratePassword.setOnClickListener {
-            val generatedPassword =
-                generatePassword(getMaxLength())
-            editTextToReceiveGeneratedPassword.text =
-                Editable.Factory.getInstance().newEditable(generatedPassword)
-            editTextRepeatToReceiveGeneratedPassword.text =
-                Editable.Factory.getInstance().newEditable(generatedPassword)
-            dismiss()
+            if(editTextPasswordLength.text.isNotEmpty()){
+                val generatedPassword =
+                    generatePassword(getMaxLength())
+                editTextToReceiveGeneratedPassword.text =
+                    Editable.Factory.getInstance().newEditable(generatedPassword)
+                editTextRepeatToReceiveGeneratedPassword.text =
+                    Editable.Factory.getInstance().newEditable(generatedPassword)
+                dismiss()
+            }else{
+                editTextPasswordLength.error = "É preciso informar um tamanho!"
+            }
         }
 
 
@@ -69,9 +70,6 @@ class DialogGeneratePassword : DialogFragment() {
             val selectedRadioButton: CustomRadioButton = view.findViewById(checkedId)
             selectedRadioButtonOption = selectedRadioButton.getOptionNumber()
         }
-
-
-
 
         return view
     }
@@ -86,7 +84,7 @@ class DialogGeneratePassword : DialogFragment() {
     }
 
     private fun getMaxLength(): Int{
-       return  spinnerMaxLength.selectedItem.toString().toInt()
+       return  editTextPasswordLength.text.toString().toInt()
     }
 
 
@@ -157,7 +155,11 @@ class DialogGeneratePassword : DialogFragment() {
         when (selectedRadioButtonOption) {
 
             1 -> {
-                repeat(passwordMaxLength) {
+                listOfCharacters.add(lowCaseLetters[Random.nextInt(lowCaseLetters.size)])
+                listOfCharacters.add(upCaseLetters[Random.nextInt(upCaseLetters.size)])
+                listOfCharacters.add(specialCharacters[Random.nextInt(specialCharacters.size)])
+                listOfCharacters.add(numbers[Random.nextInt(numbers.size)].toString())
+                repeat( passwordMaxLength-4) {
                     val randomCharacters = when (Random.nextInt(4)) {
                         0 -> lowCaseLetters[Random.nextInt(lowCaseLetters.size)]
                         1 -> upCaseLetters[Random.nextInt(upCaseLetters.size)]
@@ -169,13 +171,16 @@ class DialogGeneratePassword : DialogFragment() {
             }
 
             2 -> {
+                listOfCharacters.add(lowCaseLetters[Random.nextInt(lowCaseLetters.size)])
+                listOfCharacters.add(upCaseLetters[Random.nextInt(upCaseLetters.size)])
+                listOfCharacters.add(numbers[Random.nextInt(numbers.size)].toString())
                 repeat(passwordMaxLength) {
-                    val randomChar = when (Random.nextInt(3)) {
+                    val randomCharacters = when (Random.nextInt(3)) {
                         0 -> lowCaseLetters[Random.nextInt(lowCaseLetters.size)]
                         1 -> upCaseLetters[Random.nextInt(upCaseLetters.size)]
                         else -> numbers[Random.nextInt(numbers.size)].toString()
                     }
-                    listOfCharacters.add(randomChar)
+                    listOfCharacters.add(randomCharacters)
                 }
             }
 
@@ -188,12 +193,12 @@ class DialogGeneratePassword : DialogFragment() {
 
             else -> {
                 repeat(passwordMaxLength) {
-                    val randomChar =
+                    val randomCharacters =
                         when (Random.nextInt(2)) {
                             0 -> lowCaseLetters[Random.nextInt(lowCaseLetters.size)]
                             else -> upCaseLetters[Random.nextInt(upCaseLetters.size)]
                         }
-                    listOfCharacters.add(randomChar)
+                    listOfCharacters.add(randomCharacters)
                 }
             }
         }

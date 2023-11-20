@@ -31,6 +31,10 @@
         <item name="android:backgroundTint">@color/buttonIconTintBackground</item>
     </style>
 
+    <style name="BUTTON_FLOATING">
+        <item name="android:backgroundTint">@color/buttonFloatingBackgroundtintLight</item>
+    </style>
+
     <style name="RADIO_BUTTON">
         <item name="android:textColor">@color/radioButtonTextColorLight</item>
         <item name="android:background">@drawable/radio_button_rounded_light</item>

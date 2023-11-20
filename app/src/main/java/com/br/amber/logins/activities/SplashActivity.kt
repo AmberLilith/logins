@@ -12,7 +12,7 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-        val tempoEspera = 6000L
+        val tempoEspera = 2000L
         Handler(Looper.getMainLooper()).postDelayed({
             val intent = Intent(this, AuthenticationActivity::class.java)
             startActivity(intent)

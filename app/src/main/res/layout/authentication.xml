@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="16dp"
     style="@style/MAIN_CONTAINER">
 
     <androidx.appcompat.widget.Toolbar
@@ -44,7 +45,6 @@
         tools:context=".activities.AuthenticationActivity"
         tools:layout_editor_absoluteX="-1dp"
         tools:layout_editor_absoluteY="84dp"
-        style="@style/MAIN_CONTAINER"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/authenticationToolbar"
         app:layout_constraintEnd_toEndOf="parent"
@@ -64,7 +64,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/authenticationToolbar"
             app:layout_constraintVertical_bias="0.034"
-            tools:layout_editor_absoluteX="29dp">
+            tools:layout_editor_absoluteX="29dp"
+            >
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/authenticationTextViewEmail"
@@ -82,7 +83,6 @@
                 android:ems="10"
                 android:hint="@string/authenticationEditTextEmailHint"
                 android:inputType="textEmailAddress"
-                android:textColorHint="@color/editTextHintColorDark"
                 style="@style/EDIT_TEXT"/>
 
 

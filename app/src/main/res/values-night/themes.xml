@@ -28,6 +28,10 @@
         <item name="android:backgroundTint">@color/buttonDefaultTextDark</item>
     </style>
 
+    <style name="BUTTON_FLOATING">
+        <item name="android:backgroundTint">@color/buttonFloatingBackgroundtintDark</item>
+    </style>
+
     <style name="RADIO_BUTTON">
         <item name="android:textColor">@color/radioButtonTextColorDark</item>
         <item name="android:background">@drawable/radio_button_rounded_dark</item>
@@ -42,7 +46,7 @@
     </style>
 
     <style name="SECONDARY_CONTAINER">
-        <item name="android:background">@color/secondaryContainerBackgroundDarkBLue</item>
+        <item name="android:background">@drawable/main_background_dark</item>
     </style>
 
     <style name="LOGIN_LIST_ITEM">
@@ -51,7 +55,7 @@
     </style>
 
     <style name="EDIT_TEXT">
-        <item name="android:textColor">@color/textViewTextColorDark</item>
-        <item name="hintTextColor">@color/editTextHintColorDark</item>
+        <item name="android:textColor">@color/textViewTextColorDarkBLue</item>
+        <item name="hintTextColor">@color/editTextHintColorDarkBLue</item>
     </style>
 </resources>

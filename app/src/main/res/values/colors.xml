@@ -25,6 +25,7 @@
     <color name="editTextHintColorLight">#807C7C</color>
     <color name="toolBarBackgroundLight">#142865</color>
     <color name="spinnerTextColorLight">#030303</color>
+    <color name="buttonFloatingBackgroundtintLight">#142865</color>
 
 
 
@@ -44,8 +45,10 @@
     <color name="radioButtonBackgroundDark">#4A4444</color>
     <color name="textViewTitleTextColorDark">#FFFFFFFF</color>
     <color name="editTextHintColorDark">#807C7C</color>
+    <color name="editTextTextColorDark">#000000</color>
     <color name="toolBarBackgroundDark">#4A4444</color>
     <color name="spinnerTextColorDark">#FFFFFFFF</color>
+    <color name="buttonFloatingBackgroundtintDark">#022E75</color>
 
 
 
@@ -62,6 +65,8 @@
     <color name="radioButtonBackgroundDarkBLue">#4A4444</color>
     <color name="textViewTitleTextColorDarkBLue">#FFFFFFFF</color>
     <color name="editTextHintColorDarkBLue">#807C7C</color>
+    <color name="editTextTextColorDarkBLue">#000000</color>
     <color name="toolBarBackgroundDarkBLue">#04030B</color>
     <color name="spinnerTextColorDarkBLue">#FFFFFFFF</color>
+    <color name="buttonFloatingBackgroundtintDarkBLue">#022E75</color>
 </resources>

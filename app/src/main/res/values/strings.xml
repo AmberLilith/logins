@@ -58,6 +58,8 @@
     <string name="registerEmailPasswordButtonCancelText">Cencelar</string>
     <string name="splashImageViewContentDescription">Logo de cadeado com tons gradiente de azul</string>
     <string name="splashImageViewText">Logins</string>
+    <string name="dialogGeneratePasswordEditTextPasswordLengthText">7</string>
+    <string name="dialogGeneratePasswordEditTextPasswordLengthHint">Informe o tamanho da senha</string>
     <string-array name="list1to20">
         <item>1</item>
         <item>2</item>
