@@ -38,7 +38,7 @@ class CreateOrEditLoginActivity : AppCompatActivity() {
     private lateinit var progressBar: ProgressBar
     private lateinit var receivedParameter: Parameters
     private val loginService = LoginService()
-    private val userService = UserService()
+    private lateinit var userService: UserService
     private lateinit var secretKey: String
     private lateinit var crypt: Crypt
 
@@ -59,6 +59,7 @@ class CreateOrEditLoginActivity : AppCompatActivity() {
         buttonCancel = findViewById(R.id.createOrEditLoginButtonCancel)
         progressBar = findViewById(R.id.createOrEditLoginProgressBar)
         crypt = Crypt()
+        userService = UserService(this, progressBar)
 
         userService.getSecretKey { retrievedSecretKey ->
              secretKey = retrievedSecretKey!!

@@ -3,12 +3,11 @@ package com.br.amber.logins.activities
 import android.app.Activity
 import android.content.ClipData
 import android.content.ClipboardManager
-import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.text.InputType
-import android.net.Uri
 import android.util.Log
 import android.view.View
 import android.widget.Button
@@ -18,19 +17,14 @@ import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import com.br.amber.logins.dialogs.DialogGeneratePassword
 import com.br.amber.logins.R
-import com.br.amber.logins.models.Login
-import com.br.amber.logins.models.User
-import com.br.amber.logins.utils.GeneralUse
+import com.br.amber.logins.dialogs.DialogGeneratePassword
+import com.br.amber.logins.services.UserService
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.Picasso
-import kotlin.random.Random
 
 class RegisterUserActivity : AppCompatActivity() {
 
@@ -67,39 +61,16 @@ class RegisterUserActivity : AppCompatActivity() {
         progressBar = findViewById(R.id.registerUserProgressBar)
         auth = Firebase.auth
 
-        buttonRegister.setOnClickListener {
-            progressBar.visibility = View.VISIBLE
-            if (validateIfFieldsAreValids()) {
-                auth.createUserWithEmailAndPassword(
-                    editTextEmail.text.toString(),
-                    editTextPassword.text.toString()
-                )
-                    .addOnCompleteListener(this) { task ->
-                        if (task.isSuccessful) {
-                            Log.d(TAG, "createUserWithEmail:success")
-                            loggedUser = auth.currentUser!!
-                            val userId = loggedUser!!.uid
-                            val userName = editTextUserName.text.toString()
-                            val database = Firebase.database
-                            val data = mutableMapOf<String, Any>()
-                            data["user"] = User(userName, GeneralUse.getRandomHash(),Random.nextInt(10))
-                            data["logins"] = mutableMapOf(Pair("doNotDelete", Login("Não exlcuir esse registro!!!","Não exlcuir esse registro!!!","Não exlcuir esse registro!!!","Não exlcuir esse registro!!!")))
-                            database.reference.child(userId).setValue(data)
-                            salvePictureInCloudStorage{
-                                updateUI(loggedUser)
-                            }
 
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "createUserWithEmail:failure", task.exception)
-                            Toast.makeText(
-                                baseContext,
-                                "Authentication failed.",
-                                Toast.LENGTH_SHORT,
-                            ).show()
-                            updateUI(null)
-                        }
-                    }
+        buttonRegister.setOnClickListener {
+            val userService = UserService(this, progressBar)
+            if (validateIfFieldsAreValids()) {
+                userService.saveEmailAndPassword(
+                    editTextEmail.text.toString(),
+                    editTextPassword.text.toString(),
+                    editTextUserName.text.toString(),
+                    imageUri
+                )
             }
         }
 
@@ -114,13 +85,17 @@ class RegisterUserActivity : AppCompatActivity() {
 
         var invisiblePassword = true
         buttonViewPassword.setOnClickListener {
-            if(invisiblePassword){
-                editTextPassword.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_NORMAL
-                editTextRepeatPassword.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_NORMAL
+            if (invisiblePassword) {
+                editTextPassword.inputType =
+                    InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_NORMAL
+                editTextRepeatPassword.inputType =
+                    InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_NORMAL
                 buttonViewPassword.setBackgroundResource(R.drawable.baseline_visibility_off_24)
-            }else{
-                editTextPassword.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
-                editTextRepeatPassword.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+            } else {
+                editTextPassword.inputType =
+                    InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+                editTextRepeatPassword.inputType =
+                    InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
                 buttonViewPassword.setBackgroundResource(R.drawable.baseline_visibility_24)
             }
             invisiblePassword = !invisiblePassword
@@ -145,55 +120,18 @@ class RegisterUserActivity : AppCompatActivity() {
             intent.action = Intent.ACTION_GET_CONTENT
             getContent.launch(intent)
         }
-        }
-
-    private val getContent = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            imageUri = result.data?.data
-            Picasso.get().load(imageUri).into(imageViewPicture)
-            buttonUploadPicture.visibility = View.GONE
-            imageViewPicture.visibility = View.VISIBLE
-        }
     }
 
-
-
-    private fun salvePictureInCloudStorage(onSuccess: () -> Unit) {
-        if(loggedUser != null){
-            if(imageUri != null){
-                val storage = FirebaseStorage.getInstance()
-                val storageRef = storage.reference
-                val currentUserId = loggedUser!!.uid
-                val imageName = "$currentUserId.jpg"
-                val imageRef = storageRef.child("images").child(currentUserId).child(imageName)
-                imageRef.putFile(imageUri!!)
-                    .addOnSuccessListener {
-                        Log.d(this.javaClass.simpleName, "Imagem salva no Cloud Storage")
-                        onSuccess()
-                    }
-                    .addOnFailureListener {
-                        Log.d(this.javaClass.simpleName, "Imagem não salva no Cloud Storage. Erro: ${it.message}")
-                    }
-            }else{
-                onSuccess()
+    private val getContent =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                imageUri = result.data?.data
+                Picasso.get().load(imageUri).into(imageViewPicture)
+                buttonUploadPicture.visibility = View.GONE
+                imageViewPicture.visibility = View.VISIBLE
             }
         }
-    }
 
-
-    private fun updateUI(user: FirebaseUser?) {
-        if (user != null) {
-            val welcomeMessage = "Bem-vindo, ${user.email}!"
-            Toast.makeText(this, welcomeMessage, Toast.LENGTH_SHORT).show()
-
-            val intent = Intent(this, ListLoginsActivity::class.java)
-            startActivity(intent)
-        } else {
-            val errorMessage = "Falha no registro."
-            Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
-        }
-        progressBar.visibility = View.GONE
-    }
 
     public override fun onStart() {
         super.onStart()
@@ -227,7 +165,9 @@ class RegisterUserActivity : AppCompatActivity() {
         ) {
             editTextPassword.error = "password inválido!"
             return false
-        } else if (editTextPassword.text.trim().toString() != editTextRepeatPassword.text.trim().toString()) {
+        } else if (editTextPassword.text.trim().toString() != editTextRepeatPassword.text.trim()
+                .toString()
+        ) {
             editTextPassword.error = "As senhas não conferem!"
             editTextRepeatPassword.error = "As senhas não conferem!"
             return false

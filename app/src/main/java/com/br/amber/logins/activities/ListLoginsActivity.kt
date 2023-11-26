@@ -57,7 +57,7 @@ class ListLoginsActivity : AppCompatActivity() {
             popupMenu.menuInflater.inflate(com.br.amber.logins.R.menu.pop_up_menu, popupMenu.menu)
 
             val menuItem = popupMenu.menu.findItem(com.br.amber.logins.R.id.popUpMenuLoggedUserName)
-            val userService = UserService()
+            val userService = UserService(this, progressBar)
             userService.getUser{ retrievedUser ->
                 if(retrievedUser != null){
                     menuItem.title = "Olá, ${userService.getFistName(retrievedUser.name)}!"

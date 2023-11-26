@@ -70,8 +70,7 @@ class ListLoginsAdapter(
         notifyDataSetChanged() // Notifica o adaptador sobre as mudanças
     }
 
-    // Método para limpar os dados
-    @SuppressLint("NotifyDataSetChanged")
+     @SuppressLint("NotifyDataSetChanged")
     fun clearData() {
         plataformsNames.clear()
         loginsKeys.clear()
