@@ -1,11 +1,15 @@
 package com.br.amber.logins.activities
 
 import android.content.ContentValues.TAG
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.text.Editable
 import android.text.InputType
 import android.util.Log
 import android.widget.Button
+import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
@@ -17,6 +21,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
+
 class AuthenticationActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
@@ -26,6 +31,8 @@ class AuthenticationActivity : AppCompatActivity() {
     private lateinit var buttonShowPassword: Button
     private lateinit var textViewRegister: TextView
     private lateinit var textViewResetPassword: TextView
+    private lateinit var authenticationCheckBoxRememberMe: CheckBox
+    private lateinit var preferences: SharedPreferences
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.authentication)
@@ -35,7 +42,9 @@ class AuthenticationActivity : AppCompatActivity() {
         editTextPassword = findViewById(R.id.authenticationEditTextPassword)
         textViewRegister = findViewById(R.id.authenticationTextViewRegister)
         textViewResetPassword = findViewById(R.id.authenticationTextViewForgottenPassword)
+        authenticationCheckBoxRememberMe = findViewById(R.id.authenticationCheckBoxRememberMe)
         auth = Firebase.auth
+        preferences = getSharedPreferences("logins", Context.MODE_PRIVATE)
 
         textViewRegister.setOnClickListener {
             val intent = Intent(this, RegisterUserActivity::class.java)
@@ -58,6 +67,7 @@ class AuthenticationActivity : AppCompatActivity() {
                     if (task.isSuccessful) {
                         // Sign in success, update UI with the signed-in user's information
                         Log.d(TAG, "signInWithEmail:success")
+                        saveUserNameLocally()
                         val user = auth.currentUser
                         updateUI(user)
                     } else {
@@ -84,6 +94,14 @@ class AuthenticationActivity : AppCompatActivity() {
             }
             invisiblePassword = !invisiblePassword
         }
+
+        val savedUserName = getSavedUserNameLocally()
+       if( savedUserName != "No saved user name"){
+           authenticationCheckBoxRememberMe.isChecked = true
+           editTextEmail.text = Editable.Factory.getInstance().newEditable(savedUserName)
+       }else{
+           authenticationCheckBoxRememberMe.isChecked = false
+       }
     }
 
 
@@ -98,6 +116,21 @@ class AuthenticationActivity : AppCompatActivity() {
           startActivity(intent)
       }
   }*/
+
+    private fun saveUserNameLocally(){
+        val editor = preferences.edit()
+        if(authenticationCheckBoxRememberMe.isChecked){
+            editor.putString("savedUserName", editTextEmail.text.toString())
+            editor.apply()
+        }else{
+           editor.remove("savedUserName")
+            editor.apply()
+        }
+    }
+    private fun getSavedUserNameLocally(): String{
+        val savedUserName = preferences.getString("savedUserName", "No saved user name")
+        return savedUserName.toString()
+    }
 
     private fun reload() {
         val user = auth.currentUser

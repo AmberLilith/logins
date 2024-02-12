@@ -66,8 +66,6 @@ class CreateOrEditLoginActivity : AppCompatActivity() {
             setActivityAccordingMethod()
         }
 
-
-
         buttonSave.setOnClickListener {
             if (validateIfFieldsAreValids()) {
                 progressBar.visibility = View.VISIBLE
@@ -116,21 +114,25 @@ class CreateOrEditLoginActivity : AppCompatActivity() {
         }
 
         var invisiblePassword = true
-
         buttonShowPassword.setOnClickListener{
-            if(invisiblePassword){
-                editTextpassword.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_NORMAL
-                editTextRepeatpassword.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_NORMAL
-                buttonShowPassword.setBackgroundResource(R.drawable.baseline_visibility_off_24)
-            }else{
-                editTextpassword.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
-                editTextRepeatpassword.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
-                buttonShowPassword.setBackgroundResource(R.drawable.baseline_visibility_24)
-            }
-            invisiblePassword = !invisiblePassword
+          invisiblePassword =   showOrHidePassword(invisiblePassword)
         }
 
 
+    }
+
+    private fun showOrHidePassword(invisiblePassword: Boolean):Boolean{
+
+        if(invisiblePassword){
+            editTextpassword.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_NORMAL
+            editTextRepeatpassword.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_NORMAL
+            buttonShowPassword.setBackgroundResource(R.drawable.baseline_visibility_off_24)
+        }else{
+            editTextpassword.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+            editTextRepeatpassword.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+            buttonShowPassword.setBackgroundResource(R.drawable.baseline_visibility_24)
+        }
+        return !invisiblePassword
     }
 
     private fun returnToListLoginsActivity() {

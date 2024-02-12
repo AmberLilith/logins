@@ -85,20 +85,7 @@ class RegisterUserActivity : AppCompatActivity() {
 
         var invisiblePassword = true
         buttonViewPassword.setOnClickListener {
-            if (invisiblePassword) {
-                editTextPassword.inputType =
-                    InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_NORMAL
-                editTextRepeatPassword.inputType =
-                    InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_NORMAL
-                buttonViewPassword.setBackgroundResource(R.drawable.baseline_visibility_off_24)
-            } else {
-                editTextPassword.inputType =
-                    InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
-                editTextRepeatPassword.inputType =
-                    InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
-                buttonViewPassword.setBackgroundResource(R.drawable.baseline_visibility_24)
-            }
-            invisiblePassword = !invisiblePassword
+            invisiblePassword = showOrHidePassword(invisiblePassword)
         }
 
         buttonCopyPassword.setOnClickListener {
@@ -151,6 +138,23 @@ class RegisterUserActivity : AppCompatActivity() {
                     Log.e(javaClass.simpleName, task.exception?.message.toString())
                 }
             }
+    }
+
+    private fun showOrHidePassword(invisiblePassword: Boolean):Boolean{
+        if (invisiblePassword) {
+            editTextPassword.inputType =
+                InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_NORMAL
+            editTextRepeatPassword.inputType =
+                InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_NORMAL
+            buttonViewPassword.setBackgroundResource(R.drawable.baseline_visibility_off_24)
+        } else {
+            editTextPassword.inputType =
+                InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+            editTextRepeatPassword.inputType =
+                InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+            buttonViewPassword.setBackgroundResource(R.drawable.baseline_visibility_24)
+        }
+        return !invisiblePassword
     }
 
     private fun validateIfFieldsAreValids(): Boolean {

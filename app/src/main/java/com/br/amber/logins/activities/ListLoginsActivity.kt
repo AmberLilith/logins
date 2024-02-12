@@ -42,49 +42,17 @@ class ListLoginsActivity : AppCompatActivity() {
         buttonNewLogin = findViewById(com.br.amber.logins.R.id.listLoginsFloatingActionButtonCreateNewLogin)
         progressBar = findViewById(com.br.amber.logins.R.id.listLoginProgressBar)
 
+
+
         retrieveListOfLogins()
 
 
         buttonNewLogin.setOnClickListener {
-            val intent = Intent(this, CreateOrEditLoginActivity::class.java)
-            intent.putExtra("parameters", "{\"method\":\"create\", \"loginKey\":\"\"}")
-            startActivity(intent)
+            callCreateOrEditLoginActivityToEdit()
         }
 
         loggedUserImageViewPicture.setOnClickListener { view ->
-            println(loggedUserImageViewPicture.drawable)
-            val popupMenu = PopupMenu(this, view)
-            popupMenu.menuInflater.inflate(com.br.amber.logins.R.menu.pop_up_menu, popupMenu.menu)
-
-            val menuItem = popupMenu.menu.findItem(com.br.amber.logins.R.id.popUpMenuLoggedUserName)
-            val userService = UserService(this, progressBar)
-            userService.getUser{ retrievedUser ->
-                if(retrievedUser != null){
-                    menuItem.title = "Olá, ${userService.getFistName(retrievedUser.name)}!"
-                }
-            }
-
-
-
-            popupMenu.setOnMenuItemClickListener { item ->
-                when (item.itemId) {
-                    com.br.amber.logins.R.id.popUpMenuCriarNovoLogin -> {
-                        val intent = Intent(this, CreateOrEditLoginActivity::class.java)
-                        intent.putExtra("parameters", "{\"method\":\"create\", \"loginKey\":\"\"}")
-                        startActivity(intent)
-                        true
-                    }
-                    com.br.amber.logins.R.id.popUpMenuLogOut -> {
-                        auth.signOut()
-                        val intent = Intent(this, AuthenticationActivity::class.java)
-                        startActivity(intent)
-                        true
-                    }
-                    else -> false
-                }
-            }
-
-            popupMenu.show()
+            createMenu(view)
         }
 
     }
@@ -92,6 +60,47 @@ class ListLoginsActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         uploadLoggedUserPicture()
+    }
+
+    private fun callCreateOrEditLoginActivityToEdit(){
+        val intent = Intent(this, CreateOrEditLoginActivity::class.java)
+        intent.putExtra("parameters", "{\"method\":\"create\", \"loginKey\":\"\"}")
+        startActivity(intent)
+    }
+
+    private fun createMenu(view: View){
+        val popupMenu = PopupMenu(this, view)
+        popupMenu.menuInflater.inflate(com.br.amber.logins.R.menu.pop_up_menu, popupMenu.menu)
+
+        val menuItem = popupMenu.menu.findItem(com.br.amber.logins.R.id.popUpMenuLoggedUserName)
+        val userService = UserService(this, progressBar)
+        userService.getUser{ retrievedUser ->
+            if(retrievedUser != null){
+                menuItem.title = "Olá, ${userService.getFistName(retrievedUser.name)}!"
+            }
+        }
+
+
+
+        popupMenu.setOnMenuItemClickListener { item ->
+            when (item.itemId) {
+                com.br.amber.logins.R.id.popUpMenuCriarNovoLogin -> {
+                    val intent = Intent(this, CreateOrEditLoginActivity::class.java)
+                    intent.putExtra("parameters", "{\"method\":\"create\", \"loginKey\":\"\"}")
+                    startActivity(intent)
+                    true
+                }
+                com.br.amber.logins.R.id.popUpMenuLogOut -> {
+                    auth.signOut()
+                    val intent = Intent(this, AuthenticationActivity::class.java)
+                    startActivity(intent)
+                    true
+                }
+                else -> false
+            }
+        }
+
+        popupMenu.show()
     }
 
 

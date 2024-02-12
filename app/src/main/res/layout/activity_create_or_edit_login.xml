@@ -131,7 +131,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/editTextHeight"
                 android:hint="@string/createOrEditLoginEditTextUserHint"
-                android:inputType="text"
+                android:inputType="textEmailAddress"
                 android:autofillHints="username"
                 android:paddingStart="@dimen/editTextPaddingStart"
                 android:paddingEnd="@dimen/editTextPaddingEnd" />

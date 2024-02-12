@@ -21,10 +21,11 @@ class ListLoginsAdapter(
     private val loginsKeys: MutableList<String>
 ) : RecyclerView.Adapter<ListLoginsAdapter.ViewHolder>() {
 
+
     class ViewHolder(view: View, listLoginsAdapterContext: Context) :
         RecyclerView.ViewHolder(view) {
-        val buttonEditLogin: CustomButtonLogin = itemView.findViewById(R.id.buttonEditLogin)
-        val buttonDeleteLogin: CustomButtonLogin = itemView.findViewById(R.id.buttonDeleteLogin)
+        private val buttonEditLogin: CustomButtonLogin = itemView.findViewById(R.id.buttonEditLogin)
+        private val buttonDeleteLogin: CustomButtonLogin = itemView.findViewById(R.id.buttonDeleteLogin)
 
         init {
 

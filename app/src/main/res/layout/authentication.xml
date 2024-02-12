@@ -131,6 +131,27 @@
                 android:inputType="textPassword"
                 style="@style/EDIT_TEXT"/>
 
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <androidx.appcompat.widget.AppCompatCheckBox
+                    android:id="@+id/authenticationCheckBoxRememberMe"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/authenticationCheckBoxRememberMeText" />
+
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/authenticationTextViewRegister"
                 android:layout_width="match_parent"
